@@ -1,0 +1,33 @@
+<h1 class="mat-display-1">Liste des Utilisateurs</h1>
+<mat-table [dataSource]="dataSource" class="mat-elevation-z5">
+    <ng-container  matColumnDef="ID">
+        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{user.id}}</mat-cell>
+    </ng-container>   
+    <ng-container  matColumnDef="nom">
+        <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{user.nom}}</mat-cell>
+    </ng-container>  
+    <ng-container  matColumnDef="prenom">
+        <mat-header-cell *matHeaderCellDef>Prenoms</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{user.prenom}}</mat-cell>
+    </ng-container> 
+    <ng-container  matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
+    </ng-container> 
+    <ng-container  matColumnDef="profil">
+        <mat-header-cell *matHeaderCellDef>Profil</mat-header-cell>
+        <mat-cell *matCellDef="let user">{{user.profil.libelle}}</mat-cell>
+    </ng-container> 
+    <ng-container  matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let user">
+            <a routerLink="/admin/users/{{user.id}}"><button mat-raised-button><mat-icon>subject</mat-icon>&nbsp;</button></a>
+            <a routerLink="/admin/users/{{user.id}}"><button mat-raised-button><mat-icon>edit</mat-icon>&nbsp;</button></a>
+            <a routerLink="/admin/users/{{user.id}}"><button mat-raised-button><mat-icon>delete</mat-icon>&nbsp;</button></a>
+        </mat-cell>
+    </ng-container> 
+    <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+</mat-table>

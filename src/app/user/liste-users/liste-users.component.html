@@ -1,8 +1,8 @@
 <h1 class="mat-display-1">Liste des Utilisateurs</h1>
 <mat-table [dataSource]="dataSource" class="mat-elevation-z5">
-    <ng-container  matColumnDef="ID">
-        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-        <mat-cell *matCellDef="let user">{{user.id}}</mat-cell>
+    <ng-container  matColumnDef="avatar">
+        <mat-header-cell *matHeaderCellDef>Avatar</mat-header-cell>
+        <mat-cell *matCellDef="let user"><img src="{{'data:image/jpg;base64,' + user.avatar}}" alt="avatar" class="avatar"></mat-cell>
     </ng-container>   
     <ng-container  matColumnDef="nom">
         <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
@@ -23,11 +23,18 @@
     <ng-container  matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
         <mat-cell *matCellDef="let user">
-            <a routerLink="/admin/users/{{user.id}}"><button mat-raised-button><mat-icon>subject</mat-icon>&nbsp;</button></a>
-            <a routerLink="/admin/users/{{user.id}}"><button mat-raised-button><mat-icon>edit</mat-icon>&nbsp;</button></a>
-            <a routerLink="/admin/users/{{user.id}}"><button mat-raised-button><mat-icon>delete</mat-icon>&nbsp;</button></a>
+            <a routerLink="/admin/users/{{user.id}}" #user><button (click)="openDialog(user)" mat-raised-button color="accent"><mat-icon>subject</mat-icon>&nbsp;</button></a>
+            <a routerLink="/admin/users/{{user.id}}"><button mat-raised-button color="primary"><mat-icon>edit</mat-icon>&nbsp;</button></a>
+            <a routerLink="/admin/users/{{user.id}}"><button mat-raised-button color="warn"><mat-icon>delete</mat-icon>&nbsp;</button></a>
         </mat-cell>
     </ng-container> 
     <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
 </mat-table>
+
+<mat-paginator [length]="30"
+              [pageSize]="10"
+              [pageIndex]=""
+              [pageSizeOptions]="[5, 10, 25, 30]"
+              (page)="pageEvent = getServerData($event)">
+</mat-paginator>

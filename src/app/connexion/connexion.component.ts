@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../parametres/auth.service';
 import { JWTTokenService } from '../parametres/jwt-helper.service';
-import { subscribeOn } from 'rxjs/operators';
 
 @Component({
   selector: 'app-connexion',
@@ -45,7 +44,8 @@ export class ConnexionComponent implements OnInit {
       data => {
         console.log('token: '+data.token)
         this.jwtService.setToken(data.token)
-        console.log('Expire: '+this.jwtService.isTokenExpired())
+        console.log('token expiré ?: '+this.jwtService.isTokenExpired())
+        this.router.navigate(['accueil']);
       },
       error => {
         if (error.status === 401) {
@@ -55,16 +55,5 @@ export class ConnexionComponent implements OnInit {
         return
       }
     );
-
-    
-    this.authService.getProfils().subscribe(
-      data => {
-        console.log(data)
-      },
-      error => {
-        console.log(error)
-      }
-    );
   }
-
 }

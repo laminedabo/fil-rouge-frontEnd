@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfilService } from '../Services/profil.service';
+import { ProfilService } from '../../Services/profil.service';
 
 
 @Component({
@@ -11,12 +11,17 @@ export class ListeProfilComponent implements OnInit {
 
   constructor(private profilService: ProfilService) { }
 
-  ngOnInit(): void {
-  }
-  
-  profils = this.profilService.getProfils();
 
-  dataSource = this.profils;
+  dataSource : any[];
+
+  ngOnInit(): void {
+    this.profilService.getProfils().subscribe(
+      data => {
+        this.dataSource = data
+      }
+    );
+  }
+
   tableColumns  :  string[] = ['ID', 'libelle','actions'];
   
 }

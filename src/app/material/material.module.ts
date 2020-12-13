@@ -7,11 +7,14 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips'
-import {MatTableModule} from '@angular/material/table'; 
-import {MatListModule} from '@angular/material/list';
+import { MatTableModule} from '@angular/material/table'; 
+import { MatListModule} from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu'
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator'
 
 
 const MaterialComponents = [
@@ -25,7 +28,10 @@ const MaterialComponents = [
   MatListModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatTooltipModule,
+  MatDialogModule,
+  MatPaginatorModule
 ]
 
 @NgModule({

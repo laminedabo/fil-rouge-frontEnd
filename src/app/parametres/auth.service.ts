@@ -1,28 +1,63 @@
+import { JWTTokenService } from './jwt-helper.service';
+import { LocalStorageService } from './local-storage.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private authUrl =  'http://127.0.0.1:8000/api/login_check';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router: Router,private localStorage: LocalStorageService, private jwt: JWTTokenService) { }
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 
+      'Content-Type': 'application/json',
+    })
   }
 
   /** POST */
-  login(username: string, password: string): Observable<any>{
-    return this.http.post<any>(this.authUrl, {username, password}, this.httpOptions)
+  public login(username: string, password: string): Observable<any>{
+    return this.http.post<any>('/api/login_check', {username, password}, this.httpOptions)
   }
 
   /** GET */
-  getProfils(): Observable<any>{// essai get profil
-    return this.http.get('http://127.0.0.1:8000/api/admin/profils', this.httpOptions)
+  public get(uri: string): Observable<any>{
+    return this.http.get<any>(uri, this.httpOptions)
+  }
+
+  /** POST */
+  public post(uri: string): Observable<any>{
+    return this.http.post<any>(uri, this.httpOptions)
+  }
+
+  /** PUT */
+  public put(uri: string): Observable<any>{
+    return this.http.put<any>(uri, this.httpOptions)
+  }
+
+  /** DELETE */
+  public delete(uri: string): Observable<any>{
+    return this.http.delete<any>(uri, this.httpOptions)
+  }
+
+  // Enregostrement du user dans le localStorage
+  public Connect(token: string){
+    this.localStorage.set("token", JSON.stringify(token));
+  }
+
+  // Test de connectivité du user
+  public isConnected(){
+    return this.localStorage.get("token") && !this.jwt.isTokenExpired();
+  }
+
+  // Deconnexion
+  public disConnect(){
+    if(this.isConnected()){
+      this.localStorage.remove("token");
+      this.router.navigateByUrl('/login');
+    }
   }
 }

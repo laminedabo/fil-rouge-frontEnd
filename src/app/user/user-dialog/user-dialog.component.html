@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+
+<mat-dialog-content fxLayoutAlign="center center">
+    <img src="{{'data:image/jpg;base64,' + data.user.avatar}}" alt="avatar" class="avatar">
+    <p> Identifiant: {{data.user.id}} </p>
+    <p> Nom: {{data.user.nom}} </p>
+    <p> Prenom: {{data.user.prenom}} </p>
+    <p> Email: {{data.user.email}} </p>
+    <p> Nom d'utilisateur: {{data.user.username}} </p>
+    <p> Date de dernière connexion: {{data.user.lastLogin}} </p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button" (click)="close()">Close</button>
+</mat-dialog-actions>

@@ -1,9 +1,11 @@
 import { User } from './../../Entity/User';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../Services/user.service';
-import {PageEvent} from "@angular/material/paginator";
+import { PageEvent } from "@angular/material/paginator";
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
+import { DialogComponent } from 'src/app/public/dialog/dialog.component';
+import { AuthService } from 'src/app/parametres/auth.service';
 
 @Component({
   selector: 'app-liste-users',
@@ -13,7 +15,7 @@ import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 export class ListeUsersComponent implements OnInit {
 
-  constructor(private userService: UserService, private matDialog: MatDialog) { }
+  constructor(private userService: UserService, private matDialog: MatDialog, private authService: AuthService) { }
 
   dataSource : any[];
 
@@ -43,16 +45,55 @@ export class ListeUsersComponent implements OnInit {
 
   tableColumns  :  string[] = ['avatar', 'nom','prenom','email','profil','actions'];
 
-  openDialog(user:User) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.height = '60%';
-    dialogConfig.width = '50%'
-    dialogConfig.data = {
+  dialogConfig = new MatDialogConfig();
+  openDetails(user:User) {
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.height = '65%';
+    this.dialogConfig.width = '50%'
+    this.dialogConfig.data = {
       "title":"Details Utilisateur",
-      "user":user
+      "user":user,
     };
-    const dialogRef = this.matDialog.open(UserDialogComponent, dialogConfig);
+    const dialogRef = this.matDialog.open(UserDialogComponent, this.dialogConfig);
+
+    dialogRef.afterClosed().subscribe(value => {
+      console.log(`Dialog sent: ${value}`); 
+    });
+  }
+
+  openDelete(user:User){
+    this.dialogConfig.height = '26%';
+    this.dialogConfig.width = '30%'
+    this.dialogConfig.data = {
+      "title":"Blocage Utilisateur",
+      "message":`Vous bloquez l'utilisateur ${user.prenom} ${user.nom} de profil ${user.profil.libelle} ?`
+    };
+    const dialogRef = this.matDialog.open(DialogComponent, this.dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result=='confirmation'){
+        this.authService.delete('/api/admin/users/'+user.id).subscribe(
+          res => {
+            console.log(res)
+          },
+          err => {
+            console.log(err)
+          }
+        )
+      }
+    });
+  }
+
+  openEdit(user: User){
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.height = '65%';
+    this.dialogConfig.width = '50%'
+    this.dialogConfig.data = {
+      "title":"Edit User",
+      "user":user,
+      "action":"edit"
+    };
+    const dialogRef = this.matDialog.open(UserDialogComponent, this.dialogConfig);
 
     dialogRef.afterClosed().subscribe(value => {
       console.log(`Dialog sent: ${value}`); 

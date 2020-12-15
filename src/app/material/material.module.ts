@@ -15,6 +15,12 @@ import { MatMenuModule } from '@angular/material/menu'
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MaterialFileInputModule } from 'ngx-material-file-input'
 
 
 const MaterialComponents = [
@@ -31,7 +37,13 @@ const MaterialComponents = [
   MatMenuModule,
   MatTooltipModule,
   MatDialogModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatBadgeModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatInputModule,
+  MaterialFileInputModule
 ]
 
 @NgModule({

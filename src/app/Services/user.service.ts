@@ -13,4 +13,9 @@ export class UserService {
     return this.authService.get('/api/admin/users?page='+pageIndex);
   }
 
+
+  addUser(user:any){
+    return this.authService.post('/api/admin/users',user);
+  }
+
 }

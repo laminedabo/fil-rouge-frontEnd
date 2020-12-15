@@ -1,15 +1,41 @@
-<h2 mat-dialog-title>{{data.title}}</h2>
+<div class="details" *ngIf="!data.action">
+    <h1 mat-dialog-title>{{data.title}}</h1>
 
-<mat-dialog-content fxLayoutAlign="center center">
-    <img src="{{'data:image/jpg;base64,' + data.user.avatar}}" alt="avatar" class="avatar">
-    <p> Identifiant: {{data.user.id}} </p>
-    <p> Nom: {{data.user.nom}} </p>
-    <p> Prenom: {{data.user.prenom}} </p>
-    <p> Email: {{data.user.email}} </p>
-    <p> Nom d'utilisateur: {{data.user.username}} </p>
-    <p> Date de dernière connexion: {{data.user.lastLogin}} </p>
-</mat-dialog-content>
+    <mat-dialog-content>
+        <img src="{{'data:image/jpg;base64,' + data.user.avatar}}" alt="avatar" class="avatar">
+        <p> Identifiant: <strong>{{data.user.id}}</strong></p>
+        <p> Nom: <strong>{{data.user.nom}}</strong> </p>
+        <p> Prenom: <strong>{{data.user.prenom}}</strong> </p>
+        <p> Email: <strong>{{data.user.email}}</strong> </p>
+        <p> Nom d'utilisateur: <strong>{{data.user.username}}</strong> </p>
+        <p> Adresse: <strong>{{data.user.adresse}}</strong> </p>
+        <p> Profil: <strong>{{data.user.profil.libelle}}</strong> </p>
+        <p> Date de dernière connexion: <strong>{{data.user.lastLogin |  date:'dd/MM/yyyy à hh:mm'}}</strong> </p>
+    </mat-dialog-content>
 
-<mat-dialog-actions>
-    <button class="mat-raised-button" (click)="close()">Close</button>
+    <mat-dialog-actions>
+        <button mat-raised-button color="accent" (click)="close()">Fermer</button>
+    </mat-dialog-actions>
+</div>
+
+<div class="details" *ngIf="data.action">
+    <h1 mat-dialog-title>{{data.title}}</h1>
+
+    <mat-dialog-content>
+        <img src="{{'data:image/jpg;base64,' + data.user.avatar}}" alt="avatar" class="avatar"><br>
+        <p> <strong>{{data.user.nom}} {{data.user.prenom}}</strong> </p>
+        <p> Profil: <strong>{{data.user.profil.libelle}}</strong> </p>
+        <mat-form-field appearance="fill" class="form-field" style="width: 100%;">
+            <mat-label style="color: yellow;">Changer le profil</mat-label>
+            <mat-select formControlName="profil_id">
+              <mat-option *ngFor="let profil of profils" value="{{profil.id}}">{{profil.libelle}}</mat-option>
+            </mat-select>
+            
+        </mat-form-field>
+    </mat-dialog-content>
+
+    
+</div>
+<mat-dialog-actions  *ngIf="data.action">
+    <button mat-raised-button color="primary" (click)="save()">Enregister</button>
 </mat-dialog-actions>

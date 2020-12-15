@@ -14,7 +14,7 @@ export class AuthService {
 
   httpOptions = {
     headers: new HttpHeaders({ 
-      'Content-Type': 'application/json',
+      //add headers here
     })
   }
 
@@ -29,8 +29,8 @@ export class AuthService {
   }
 
   /** POST */
-  public post(uri: string): Observable<any>{
-    return this.http.post<any>(uri, this.httpOptions)
+  public post(uri: string, data: any): Observable<any>{
+    return this.http.post<any>(uri, data, this.httpOptions)
   }
 
   /** PUT */

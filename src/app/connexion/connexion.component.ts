@@ -23,8 +23,8 @@ export class ConnexionComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['',{ validators: [Validators.required], updateOn: "change" }],
+      password: ['',{ validators: [Validators.required], updateOn: "change" }],
     });
   }
 
@@ -33,6 +33,7 @@ export class ConnexionComponent implements OnInit {
   }
 
   message: string;
+  hide = true;
 
   seConnecter(){
     // console.log(this.loginForm.value);

@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { ProfilService } from './../../Services/profil.service';
 
 @Component({
   selector: 'app-user-dialog',
@@ -8,16 +9,27 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 })
 export class UserDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<UserDialogComponent>,
+  constructor(private profilService: ProfilService ,public dialogRef: MatDialogRef<UserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       console.log(data)
     }
 
+    profils: any
+
   ngOnInit(): void {
+    this.profilService.getProfils().subscribe(
+      data => {
+        this.profils = data
+      }
+    ) 
   }
 
   close() {
-    this.dialogRef.close("Données envoyées sucess");
+    this.dialogRef.close("sucess");
+  }
+
+  save(){
+    this.dialogRef.close("save");
   }
 
 }

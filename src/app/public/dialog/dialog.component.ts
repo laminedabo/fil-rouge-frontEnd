@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { AuthService } from '../../parametres/auth.service'
 
 @Component({
   selector: 'app-dialog',
@@ -9,16 +8,21 @@ import { AuthService } from '../../parametres/auth.service'
 })
 export class DialogComponent implements OnInit {
 
+  title: string;
+  message: string;
+
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private authService: AuthService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.title = data.title;
+      this.message = data.message;
+    }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  seDeconnecter(){
-    this.authService.disConnect()
-    this.dialogRef.close();
+  onConfirm(){
+    this.dialogRef.close('confirmation');
   }
 
 

@@ -1,21 +1,23 @@
-<h1 class="mat-display-1">Liste des profils</h1>
-<mat-table [dataSource]="dataSource" class="mat-elevation-z5" style="width: 125%;">
-    <ng-container  matColumnDef="ID">
-        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-        <mat-cell *matCellDef="let profil">{{profil.id}}</mat-cell>
-    </ng-container>   
-    <ng-container  matColumnDef="libelle">
-        <mat-header-cell *matHeaderCellDef>Libelle</mat-header-cell>
-        <mat-cell *matCellDef="let profil">{{profil.libelle}}</mat-cell>
-    </ng-container>  
-    <ng-container  matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-        <mat-cell *matCellDef="let profil">
-            <a routerLink="/profils/{{profil.id}}/users"><button mat-raised-button color="accent"><mat-icon>list</mat-icon>&nbsp;</button> &nbsp;</a>
-            <a routerLink="/admin/profils/{{profil.id}}"><button mat-raised-button color="primary"><mat-icon>edit</mat-icon>&nbsp;</button></a>
-            <a routerLink="/admin/profils/{{profil.id}}"><button mat-raised-button color="warn"><mat-icon>delete</mat-icon>&nbsp;</button></a>
-        </mat-cell>
-    </ng-container> 
-    <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
-</mat-table>
+<div style="margin: 20px 20px;">   
+    <h1 class="mat-display-1">Liste des profils</h1>
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z5">
+        <ng-container  matColumnDef="ID">
+            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-cell *matCellDef="let profil">{{profil.id}}</mat-cell>
+        </ng-container>   
+        <ng-container  matColumnDef="libelle">
+            <mat-header-cell *matHeaderCellDef>Libelle</mat-header-cell>
+            <mat-cell *matCellDef="let profil">{{profil.libelle}}</mat-cell>
+        </ng-container>  
+        <ng-container  matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let profil">
+                <a routerLink="/profils/{{profil.id}}/users"><button mat-raised-button color="accent"><mat-icon>list</mat-icon>&nbsp;</button> &nbsp;</a>
+                <a routerLink="/admin/profils/{{profil.id}}"><button mat-raised-button color="primary"><mat-icon>edit</mat-icon>&nbsp;</button></a>
+                <a routerLink="/admin/profils/{{profil.id}}"><button mat-raised-button color="warn"><mat-icon>delete</mat-icon>&nbsp;</button></a>
+            </mat-cell>
+        </ng-container> 
+        <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+    </mat-table>
+</div> 

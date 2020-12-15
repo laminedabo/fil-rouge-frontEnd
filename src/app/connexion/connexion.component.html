@@ -4,30 +4,27 @@
 <img src="../../assets/images/inf.svg" alt="image-svg">
 <div class="login">
     <h2 class="login-header">S'identifier</h2>
-    <form [formGroup]="loginForm" class="login-container" (ngSubmit)="seConnecter()">
-        <p [ngClass]="{ 'has-error': isSubmitted }">
-            <input type="text" placeholder="Username" formControlName="username">
-        </p>
+    <form [formGroup]="loginForm" (submit)="seConnecter()">
+        <mat-form-field class="form-field" appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" required>
+          <mat-error *ngIf="loginForm.get('username').hasError('required')">
+            Le nom d'utilisateur est <strong>requis</strong>
+          </mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+          <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password').hasError('required')">
+            Le mot de passse est <strong>requis</strong>
+          </mat-error>
+        </mat-form-field>
 
-        <div *ngIf="isSubmitted && formControls.username.errors" class="help-block">
-            <div *ngIf="formControls.username.errors.required">
-                <small>Le login est requis</small>
-            </div>
-        </div>
-
-        <p [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
-            <input type="password" placeholder="Password" formControlName="password">
-        </p>
-
-        <div *ngIf="isSubmitted && formControls.password.errors" class="help-block">
-            <div *ngIf="formControls.password.errors.required">
-                <small>Le mot de passe est requis</small>
-            </div>
-        </div>
-
-        <p>
         <input type="submit" value="Se connecter">
-        </p>
     </form>
     <div *ngIf="message" class="login_error">
         {{ message }}

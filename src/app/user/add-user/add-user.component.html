@@ -1,1 +1,57 @@
-<p>add-user works!</p>
+<div class="container" style="width: 50%; margin: auto; background-color:white;">
+  <form [formGroup]="registerForm" (submit)="submit()">
+    <p mat-display-1>Nouvel Utilisateur ?</p>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom">
+      <mat-error *ngIf="registerForm.get('nom').hasError('required')">
+        Nom is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Prenom</mat-label>
+      <input matInput formControlName="prenom">
+      <mat-error *ngIf="registerForm.get('prenom').hasError('required')">
+        Prenom is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email">
+      <mat-error *ngIf="registerForm.get('email').hasError('email') && !registerForm.get('email').hasError('required')">
+      Email non valide
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('email').hasError('required')">
+      Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Profil</mat-label>
+      <mat-select formControlName="profil_id">
+        <mat-option *ngFor="let profil of profils" value="{{profil.id}}">{{profil.libelle}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="registerForm.get('profil_id').hasError('required')">
+        Choisir le <strong>profil</strong>
+        </mat-error>
+    </mat-form-field>
+     
+    <mat-form-field appearance="fill" class="form-field">
+      <ngx-mat-file-input formControlName="avatar" placeholder="Image" valuePlaceholder="Aucune image séléctionnée" required></ngx-mat-file-input>
+      <mat-icon matSuffix>folder</mat-icon>
+      <mat-error *ngIf="registerForm.get('avatar').hasError('required')">
+        Choisir une image
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('avatar').hasError('maxContentSize')">
+        La taille ne doit pas depasser {{registerForm.get('avatar')?.getError('maxContentSize').maxSize | byteFormat}} (votre image fait {{registerForm.get('avatar')?.getError('maxContentSize').actualSize
+        | byteFormat}}).
+      </mat-error>
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary">SOUMETTRE</button>
+  </form>
+</div>
+<br><br><br>
+

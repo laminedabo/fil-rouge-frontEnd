@@ -1,4 +1,18 @@
 .avatar{
-    width: 100px;
-    height: 80px;
+    width: 200px;
+    height: 150px;
+    border-radius: 20%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.details{
+    background-image: url('./bg.webp');
+    background-attachment: fixed;
+    padding: 5%;
+    text-align: justify;
+    color: lavenderblush;
+    text-justify: auto;
+    font-size: 25px;
 }

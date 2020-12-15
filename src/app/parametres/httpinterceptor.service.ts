@@ -20,17 +20,22 @@ export class HTTPInterceptorService implements HttpInterceptor{
       if (this.jwtService.isTokenExpired()) {
         console.log('expired token');
         this.router.navigateByUrl('/login');
-        // return
+        return
       }
       request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });    
     }
 
-    if (!request.headers.has('Content-Type')) {
+    if (request.method==='POST' && request.url==='/api/admin/users') {
+      request = request.clone({ headers: request.headers.set('Accept', '*/*')});
+    }
+    else if (!request.headers.has('Content-Type')){
       request = request.clone({ headers: request.headers.set('Content-Type', 'application/json')})
     }
     
-    request = request.clone({ headers: request.headers.set('Accept', 'application/json')})
-
+    if (request.method==='GET') {
+      request = request.clone({ headers: request.headers.set('Accept', 'application/json')});
+    }
+    
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {

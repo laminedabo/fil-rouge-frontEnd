@@ -24,7 +24,7 @@
           </mat-error>
         </mat-form-field>
 
-        <input type="submit" value="Se connecter">
+        <input [disabled]="loginForm.invalid" type="submit" value="Se connecter">
     </form>
     <div *ngIf="message" class="login_error">
         {{ message }}

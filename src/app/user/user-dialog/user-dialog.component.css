@@ -16,3 +16,8 @@
     text-justify: auto;
     font-size: 25px;
 }
+
+.form-field{
+    width: 100%;
+    display: block;
+}

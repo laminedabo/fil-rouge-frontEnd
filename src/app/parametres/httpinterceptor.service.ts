@@ -28,9 +28,9 @@ export class HTTPInterceptorService implements HttpInterceptor{
     if (request.method==='POST' && request.url==='/api/admin/users') {
       request = request.clone({ headers: request.headers.set('Accept', '*/*')});
     }
-    else if (!request.headers.has('Content-Type')){
-      request = request.clone({ headers: request.headers.set('Content-Type', 'application/json')})
-    }
+    // else if (!request.headers.has('Content-Type')){
+    //   request = request.clone({ headers: request.headers.set('Content-Type', 'application/json')})
+    // }
     
     if (request.method==='GET') {
       request = request.clone({ headers: request.headers.set('Accept', 'application/json')});

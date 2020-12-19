@@ -18,24 +18,82 @@
     </mat-dialog-actions>
 </div>
 
-<div class="details" *ngIf="data.action">
+<div *ngIf="data.action">
     <h1 mat-dialog-title>{{data.title}}</h1>
-
+    <img src="{{'data:image/jpg;base64,' + data.user.avatar}}" alt="avatar" class="avatar">
+    Actuellement {{data.user.profil.libelle}}
+    <mat-divider style="margin: 20px 20%;"></mat-divider>
     <mat-dialog-content>
-        <img src="{{'data:image/jpg;base64,' + data.user.avatar}}" alt="avatar" class="avatar"><br>
-        <p> <strong>{{data.user.nom}} {{data.user.prenom}}</strong> </p>
-        <p> Profil: <strong>{{data.user.profil.libelle}}</strong> </p>
-        <mat-form-field appearance="fill" class="form-field" style="width: 100%;">
-            <mat-label style="color: yellow;">Changer le profil</mat-label>
-            <mat-select formControlName="profil_id">
-              <mat-option *ngFor="let profil of profils" value="{{profil.id}}">{{profil.libelle}}</mat-option>
-            </mat-select>
-            
-        </mat-form-field>
-    </mat-dialog-content>
+        <div class="container" style="margin: auto;">
+            <form [formGroup]="registerForm" (submit)="submit()">
+              <mat-form-field class="form-field" appearance="fill">
+                <mat-label>Nom</mat-label>
+                <input matInput required formControlName="nom">
+                <mat-error *ngIf="registerForm.get('nom').hasError('required')">
+                  Nom is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+          
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Prenom</mat-label>
+                <input matInput required formControlName="prenom">
+                <mat-error *ngIf="registerForm.get('prenom').hasError('required')">
+                  Prenom is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-    
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Nom d'utilisateur</mat-label>
+                <input matInput required formControlName="username">
+                <mat-error *ngIf="registerForm.get('username').hasError('required')">
+                  Username is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+          
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Email</mat-label>
+                <input matInput required type="email" formControlName="email">
+                <mat-error *ngIf="registerForm.get('email').hasError('email') && !registerForm.get('email').hasError('required')">
+                Email non valide
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('email').hasError('required')">
+                Email is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Adresse</mat-label>
+                <input matInput required formControlName="adresse">
+                <mat-error *ngIf="registerForm.get('adresse').hasError('required')">
+                  Adresse is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+              
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Profil</mat-label>
+                <mat-select required formControlName="profil_id">
+                  <mat-option *ngFor="let profil of profils" value="{{profil.id}}">{{profil.libelle}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="registerForm.get('profil_id').hasError('required')">
+                  Choisir le <strong>profil</strong>
+                  </mat-error>
+              </mat-form-field>
+               
+              <mat-form-field appearance="fill" class="form-field">
+                <ngx-mat-file-input formControlName="avatar" placeholder="Image" valuePlaceholder="Aucune image séléctionnée"></ngx-mat-file-input>
+                <mat-icon matSuffix>folder</mat-icon>
+                <mat-error *ngIf="registerForm.get('avatar').hasError('maxContentSize')">
+                  La taille ne doit pas depasser {{registerForm.get('avatar')?.getError('maxContentSize').maxSize | byteFormat}} (votre image fait {{registerForm.get('avatar')?.getError('maxContentSize').actualSize
+                  | byteFormat}}).
+                </mat-error>
+              </mat-form-field>
+          
+              <mat-dialog-actions  *ngIf="data.action">
+                <button type="button" mat-raised-button color="accent" (click)="close()">ANNULER</button>
+                <button type="submit" mat-raised-button color="primary" (click)="submit()">SOUMETTRE</button>
+              </mat-dialog-actions>
+            </form>
+          </div>
+          <br><br><br>          
+    </mat-dialog-content>
 </div>
-<mat-dialog-actions  *ngIf="data.action">
-    <button mat-raised-button color="primary" (click)="save()">Enregister</button>
-</mat-dialog-actions>

@@ -34,8 +34,13 @@ export class AuthService {
   }
 
   /** PUT */
-  public put(uri: string): Observable<any>{
-    return this.http.put<any>(uri, this.httpOptions)
+  public put(uri: string,data:any): Observable<any>{
+    return this.http.put<any>(uri, data, this.httpOptions)
+  }
+
+  /** PATCH */
+  public patch(uri: string,data:any): Observable<any>{
+    return this.http.patch<any>(uri, data, this.httpOptions)
   }
 
   /** DELETE */

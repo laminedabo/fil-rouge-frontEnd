@@ -18,4 +18,16 @@ export class UserService {
     return this.authService.post('/api/admin/users',user);
   }
 
+  updateUser(user:any, id:number){
+    return this.authService.post('/api/admin/users/'+id,user);
+  }
+
+  getCount(){
+    return this.authService.get('/api/admin/users/count');
+  }
+
+  search(term:any){
+    return this.authService.patch('/api/admin/users/search',term);
+  }
+
 }

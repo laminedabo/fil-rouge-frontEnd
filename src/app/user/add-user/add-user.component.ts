@@ -1,5 +1,5 @@
 import { ProfilService } from './../../Services/profil.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserService } from 'src/app/Services/user.service';
 import { FileValidator } from 'ngx-material-file-input';
@@ -56,6 +56,7 @@ export class AddUserComponent implements OnInit {
       data => {
         console.log('result:  ');
         console.log(data);
+        this.sendEvent();
         this.registerForm.reset();
       },
       err => {
@@ -64,4 +65,10 @@ export class AddUserComponent implements OnInit {
       }
     );
   }
+
+  @Output() userIsCreated = new EventEmitter();
+  sendEvent(){
+    this.userIsCreated.emit(`userCreated`);
+  }
+
 }

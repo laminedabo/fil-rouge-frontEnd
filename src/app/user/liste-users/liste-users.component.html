@@ -1,5 +1,13 @@
 <div style="margin: 20px 20px;">
-<h1 class="mat-display-1">Liste des Utilisateurs</h1>
+    <h1 class="mat-display-1">Liste des Utilisateurs</h1>
+    <mat-form-field appearance="fill">
+        <mat-label>Recherche...</mat-label>
+        <input matInput type="text" (keyup)="search($event)" [(ngModel)]="searchValue">
+        <button mat-button *ngIf="!searchValue" matSuffix mat-icon-button aria-label="search"><mat-icon>search</mat-icon></button>
+        <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+        <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
     <mat-table [dataSource]="dataSource" class="mat-elevation-z5">
         <ng-container  matColumnDef="avatar">
             <mat-header-cell *matHeaderCellDef>Avatar</mat-header-cell>
@@ -34,13 +42,13 @@
     </mat-table>
 
     <mat-paginator 
-                [length]="40"
-                [pageSize]="10"
+                [length]="length"
+                [pageSize]="pageSize"
                 [pageIndex]=""
                 [pageSizeOptions]="[5, 10, 25, 30]"
                 (page)="pageEvent = getServerData($event)">
     </mat-paginator>
 </div>
 <div>
-    <app-add-user></app-add-user>
+    <app-add-user (userIsCreated)="updateTable($event)"></app-add-user>
 </div>

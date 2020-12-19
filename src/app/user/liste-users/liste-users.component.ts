@@ -20,23 +20,46 @@ export class ListeUsersComponent implements OnInit {
   dataSource : any[];
 
   pageEvent: PageEvent;
-  pageIndex:number;
+  pageIndex = 1;
   pageSize:number;
   length:number;
+
+  searchValue = '';
+  search(term: any){
+    if (term.target.value.length==0) {
+      return
+    }
+    this.userService.search(term.target.value).subscribe(
+      data => {
+        this.dataSource = data;
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
 
   ngOnInit(): void {
     this.userService.getUsers(1).subscribe(
       data => {
         this.dataSource = data
+        this.pageSize = this.dataSource.length
       }
     );
+    this.userService.getCount().subscribe(
+      data => {
+        this.length = data;
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   public getServerData(event?:PageEvent){
-    console.log(event)
-    this.userService.getUsers(event.pageIndex+1).subscribe(
+    this.pageIndex = event.pageIndex  + 1;
+    this.userService.getUsers(this.pageIndex).subscribe(
       data => {
-        console.log(data)
         this.dataSource = data
       }
     );
@@ -86,8 +109,8 @@ export class ListeUsersComponent implements OnInit {
 
   openEdit(user: User){
     this.dialogConfig.disableClose = true;
-    this.dialogConfig.height = '65%';
-    this.dialogConfig.width = '50%'
+    this.dialogConfig.height = '90%';
+    this.dialogConfig.width = '60%'
     this.dialogConfig.data = {
       "title":"Edit User",
       "user":user,
@@ -96,8 +119,26 @@ export class ListeUsersComponent implements OnInit {
     const dialogRef = this.matDialog.open(UserDialogComponent, this.dialogConfig);
 
     dialogRef.afterClosed().subscribe(value => {
+      if(value=='save'){
+        this.userService.getUsers(this.pageIndex).subscribe(
+          data => {
+            this.dataSource = data
+          }
+        );
+      }
+      
       console.log(`Dialog sent: ${value}`); 
     });
   }
-  
+
+  updateTable(event:any){
+    console.log(Math.round(this.length/this.pageSize));
+    if (event=='userCreated') {
+      this.userService.getUsers(Math.round(this.length/this.pageSize)).subscribe(
+        data => {
+          this.dataSource = data
+        }
+      );
+    }
+  }
 }

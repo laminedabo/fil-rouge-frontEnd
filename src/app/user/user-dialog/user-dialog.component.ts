@@ -17,7 +17,6 @@ export class UserDialogComponent implements OnInit {
     private profilService: ProfilService,
     public dialogRef: MatDialogRef<UserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      // console.log(data)
     }
 
     registerForm: FormGroup;
@@ -53,7 +52,6 @@ export class UserDialogComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    console.log(this.registerForm.value)
     const user = this.registerForm.value
     const formData = new FormData();
     formData.append('nom',user.nom);
@@ -67,8 +65,6 @@ export class UserDialogComponent implements OnInit {
     }
     this.userService.updateUser(formData,this.data.user.id).subscribe(
       data => {
-        console.log('result:  ');
-        // console.log(data);
         this.registerForm.reset();
       },
       err => {

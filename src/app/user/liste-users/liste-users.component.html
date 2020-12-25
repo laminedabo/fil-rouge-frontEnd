@@ -1,5 +1,5 @@
 <div style="margin: 20px 20px;">
-    <h1 class="mat-display-1">Liste des Utilisateurs</h1>
+    <h1 class="mat-display-1">{{title}}</h1>
     <mat-form-field appearance="fill">
         <mat-label>Recherche...</mat-label>
         <input matInput type="text" (keyup)="search($event)" [(ngModel)]="searchValue">
@@ -41,13 +41,13 @@
         <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
 
-    <mat-paginator 
-                [length]="length"
-                [pageSize]="pageSize"
-                [pageIndex]=""
-                [pageSizeOptions]="[5, 10, 25, 30]"
-                (page)="pageEvent = getServerData($event)">
-    </mat-paginator>
+    <app-pagination 
+    [length]="myLength"
+    [pageSize]="myPageSize"
+    [pageIndex]=""
+    (currentPage)="getServerData($event)"
+    >
+    </app-pagination>
 </div>
 <div>
     <app-add-user (userIsCreated)="updateTable($event)"></app-add-user>

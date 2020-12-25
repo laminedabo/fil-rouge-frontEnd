@@ -46,7 +46,7 @@ export class ConnexionComponent implements OnInit {
         console.log('token: '+data.token)
         this.jwtService.setToken(data.token)
         console.log('token expiré ?: '+this.jwtService.isTokenExpired())
-        this.router.navigate(['accueil']);
+        this.router.navigate(['/']);
       },
       error => {
         if (error.status === 401) {

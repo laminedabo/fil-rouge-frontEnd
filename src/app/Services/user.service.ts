@@ -10,7 +10,7 @@ export class UserService {
   constructor(private profilService: ProfilService, private authService: AuthService) { }
 
   getUsers(pageIndex?: number){
-    return this.authService.get('/api/admin/users?page='+pageIndex);
+    return this.authService.get('/api/admin/users?statut=actif&page='+pageIndex);
   }
 
 
@@ -22,8 +22,8 @@ export class UserService {
     return this.authService.post('/api/admin/users/'+id,user);
   }
 
-  getCount(){
-    return this.authService.get('/api/admin/users/count');
+  getCount(profil: number){
+    return this.authService.patch('/api/admin/users/count',{'profil':profil});
   }
 
   search(term:any){

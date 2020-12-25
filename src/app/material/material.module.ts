@@ -21,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MaterialFileInputModule } from 'ngx-material-file-input'
+import { MatCardModule } from '@angular/material/card'
 
 
 const MaterialComponents = [
@@ -43,7 +44,8 @@ const MaterialComponents = [
   MatFormFieldModule,
   MatSelectModule,
   MatInputModule,
-  MaterialFileInputModule
+  MaterialFileInputModule,
+  MatCardModule
 ]
 
 @NgModule({

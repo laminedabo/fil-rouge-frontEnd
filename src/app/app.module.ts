@@ -16,6 +16,12 @@ import { AddUserComponent } from './user/add-user/add-user.component';
 import { NavbarComponent } from './public/navbar/navbar.component';
 import { DialogComponent } from './public/dialog/dialog.component';
 import { UserDialogComponent } from './user/user-dialog/user-dialog.component';
+import { ProfilDetailsComponent } from './profil/profil-details/profil-details.component';
+import { ProfilComponent } from './profil/profil/profil.component';
+import { NotFoundComponent } from './public/not-found/not-found.component';
+import { PaginationComponent } from './public/pagination/pagination.component';
+import { ListePromoComponent } from './promo/liste-promo/liste-promo.component';
+import { AppContainerComponent } from './public/app-container/app-container.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +32,13 @@ import { UserDialogComponent } from './user/user-dialog/user-dialog.component';
     AddUserComponent,
     NavbarComponent,
     DialogComponent,
-    UserDialogComponent
+    UserDialogComponent,
+    ProfilDetailsComponent,
+    ProfilComponent,
+    NotFoundComponent,
+    PaginationComponent,
+    ListePromoComponent,
+    AppContainerComponent
   ],
   imports: [
     BrowserModule,

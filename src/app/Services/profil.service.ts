@@ -11,4 +11,8 @@ export class ProfilService {
   getProfils(){
     return this.authService.get('/api/admin/profils');
   } 
+
+  getProfilUsers(id: number){
+    return this.authService.get(`/api/admin/users?profil.id=${id}`);
+  }
 }

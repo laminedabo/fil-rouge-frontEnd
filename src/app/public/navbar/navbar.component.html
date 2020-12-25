@@ -10,6 +10,7 @@
         <div fxLayout="row" fxShow="false" fxShow.gt-sm>
             <button mat-button routerLink="/profils">Profils</button>
             <button mat-button routerLink="/users">Utilisateurs</button>
+            <button mat-button routerLink="/promos">Promos</button>
             <button mat-menu-item matTooltip="Notifications"><mat-icon  matBadge="5" matBadgeColor="accent" class="white-icon">info</mat-icon></button>
             <button mat-menu-item (click)="openDialog()" matTooltip="Deconnexion"
             aria-label="Button Deconnexion"><mat-icon class="white-icon">exit_to_app</mat-icon></button>
@@ -22,6 +23,7 @@
     <mat-menu x-position="before" #menu="matMenu">
         <button mat-menu-item routerLink="/profils">Profils</button>
         <button mat-menu-item routerLink="/users">Utilisateurs</button>
+        <button mat-button routerLink="/promos">Promos</button>
         <button mat-menu-item matTooltip="Notifications" matBadge="3" matBadgeColor="accent"><mat-icon class="white-icon">info</mat-icon></button>
         <button mat-menu-item><mat-icon class="white-icon">exit_to_app</mat-icon></button>
     </mat-menu>

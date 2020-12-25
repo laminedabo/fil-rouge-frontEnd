@@ -1,3 +1,5 @@
+import { ProfilService } from './../../Services/profil.service';
+import { ProfilDetailsComponent } from './../../profil/profil-details/profil-details.component';
 import { User } from './../../Entity/User';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../Services/user.service';
@@ -15,14 +17,17 @@ import { AuthService } from 'src/app/parametres/auth.service';
 
 export class ListeUsersComponent implements OnInit {
 
-  constructor(private userService: UserService, private matDialog: MatDialog, private authService: AuthService) { }
+  constructor(private userService: UserService, private matDialog: MatDialog, 
+    private authService: AuthService, private profilDetail: ProfilDetailsComponent,
+    private profilService: ProfilService) { }
 
+  title = 'Liste des Utilisateurs';
   dataSource : any[];
 
-  pageEvent: PageEvent;
-  pageIndex = 1;
-  pageSize:number;
-  length:number;
+  myPageEvent: PageEvent;
+  myPageIndex = 1;
+  myPageSize:number;
+  myLength:number;
 
   searchValue = '';
   search(term: any){
@@ -40,15 +45,25 @@ export class ListeUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUsers(1).subscribe(
+    if (this.profilDetail.id) {
+      this.getTotalMembers(this.profilDetail.id);
+      this.listeDetailsProfil(this.profilDetail.id);
+    }
+    else{
+      this.userService.getUsers(1).subscribe(
+        data => {
+          this.dataSource = data
+        }
+      );
+      this.getTotalMembers(0)
+    }
+    
+  }
+
+  getTotalMembers(i: number){
+    this.userService.getCount(i).subscribe(
       data => {
-        this.dataSource = data
-        this.pageSize = this.dataSource.length
-      }
-    );
-    this.userService.getCount().subscribe(
-      data => {
-        this.length = data;
+        this.myLength = data;
       },
       error => {
         console.log(error)
@@ -57,13 +72,12 @@ export class ListeUsersComponent implements OnInit {
   }
 
   public getServerData(event?:PageEvent){
-    this.pageIndex = event.pageIndex  + 1;
-    this.userService.getUsers(this.pageIndex).subscribe(
+    this.myPageIndex = event.pageIndex  + 1;
+    this.userService.getUsers(this.myPageIndex).subscribe(
       data => {
         this.dataSource = data
       }
     );
-    return event;
   }
 
   tableColumns  :  string[] = ['avatar', 'nom','prenom','email','profil','actions'];
@@ -97,6 +111,11 @@ export class ListeUsersComponent implements OnInit {
       if(result=='confirmation'){
         this.authService.delete('/api/admin/users/'+user.id).subscribe(
           res => {
+            this.userService.getUsers(this.myPageIndex).subscribe(
+              data => {
+                this.dataSource = data
+              }
+            );
             console.log(res)
           },
           err => {
@@ -120,7 +139,7 @@ export class ListeUsersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(value => {
       if(value=='save'){
-        this.userService.getUsers(this.pageIndex).subscribe(
+        this.userService.getUsers(this.myPageIndex).subscribe(
           data => {
             this.dataSource = data
           }
@@ -132,13 +151,26 @@ export class ListeUsersComponent implements OnInit {
   }
 
   updateTable(event:any){
-    console.log(Math.round(this.length/this.pageSize));
     if (event=='userCreated') {
-      this.userService.getUsers(Math.round(this.length/this.pageSize)).subscribe(
+      this.userService.getUsers(Math.round(this.myLength/this.myPageSize)).subscribe(
         data => {
           this.dataSource = data
         }
       );
     }
   }
+
+  listeDetailsProfil(id: number){
+    this.title=`${this.title} du Profil`;
+    this.profilService.getProfilUsers(id).subscribe(
+      data => {
+        this.dataSource = data;
+        this.myLength = data.length;
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
 }

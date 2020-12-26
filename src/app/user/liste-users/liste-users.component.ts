@@ -44,8 +44,10 @@ export class ListeUsersComponent implements OnInit {
     )
   }
 
+  profilId = null;
   ngOnInit(): void {
     if (this.profilDetail.id) {
+      this.profilId = this.profilDetail.id;
       this.getTotalMembers(this.profilDetail.id);
       this.listeDetailsProfil(this.profilDetail.id);
     }

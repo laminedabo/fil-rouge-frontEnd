@@ -12,7 +12,7 @@
   .example-card:hover{
     cursor: pointer;
     border:1px solid lawngreen;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
   }
   

@@ -11,7 +11,7 @@ export class ListeProfilComponent implements OnInit {
 
   constructor(private profilService: ProfilService) { }
 
-
+  title = "Liste des profils";
   dataSource : any[];
 
   ngOnInit(): void {

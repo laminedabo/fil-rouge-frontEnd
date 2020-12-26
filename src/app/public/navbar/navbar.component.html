@@ -6,11 +6,27 @@
             Accueil
         </button>
     
+        
+        <div class="dropdown">
+            <button mat-button><mat-icon class="white-icon">settings</mat-icon></button>
+            <div class="dropdown-content">
+                <a routerLink="/admin/promos">Promos</a>
+                <a routerLink="/admin/referentiels">Referentiels</a>
+                <a routerLink="/admin/promos">Groupe de compétences</a>
+                <a routerLink="/admin/promos">Compétences</a>
+                <a routerLink="/admin/promos">Groupe de tags</a>
+                <a routerLink="/admin/promos">Profils de sortie</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button mat-button><mat-icon class="white-icon">group</mat-icon></button>
+            <div class="dropdown-content">
+                <a routerLink="/admin/users">Utilisateurs</a>
+                <a routerLink="/admin/profils">Profils</a>
+            </div>
+        </div>
         <span class="fill-remaining-space"></span>
         <div fxLayout="row" fxShow="false" fxShow.gt-sm>
-            <button mat-button routerLink="/profils">Profils</button>
-            <button mat-button routerLink="/users">Utilisateurs</button>
-            <button mat-button routerLink="/promos">Promos</button>
             <button mat-menu-item matTooltip="Notifications"><mat-icon  matBadge="5" matBadgeColor="accent" class="white-icon">info</mat-icon></button>
             <button mat-menu-item (click)="openDialog()" matTooltip="Deconnexion"
             aria-label="Button Deconnexion"><mat-icon class="white-icon">exit_to_app</mat-icon></button>
@@ -21,9 +37,9 @@
     
     </mat-toolbar>
     <mat-menu x-position="before" #menu="matMenu">
-        <button mat-menu-item routerLink="/profils">Profils</button>
-        <button mat-menu-item routerLink="/users">Utilisateurs</button>
-        <button mat-button routerLink="/promos">Promos</button>
+        <button mat-menu-item routerLink="/admin/profils">Profils</button>
+        <button mat-menu-item routerLink="/admin/users">Utilisateurs</button>
+        <button mat-button routerLink="/admin/promos">Promos</button>
         <button mat-menu-item matTooltip="Notifications" matBadge="3" matBadgeColor="accent"><mat-icon class="white-icon">info</mat-icon></button>
         <button mat-menu-item><mat-icon class="white-icon">exit_to_app</mat-icon></button>
     </mat-menu>

@@ -12,6 +12,9 @@ export class PromoService {
     return this.authService.get('/api/admin/promos');
   }
 
+  getPromo(id: number){
+    return this.authService.get('/api/admin/promos/'+id);
+  }
 
   addPromo(promo:any){
     return this.authService.post('/api/admin/promos',promo);

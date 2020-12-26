@@ -22,6 +22,18 @@ import { NotFoundComponent } from './public/not-found/not-found.component';
 import { PaginationComponent } from './public/pagination/pagination.component';
 import { ListePromoComponent } from './promo/liste-promo/liste-promo.component';
 import { AppContainerComponent } from './public/app-container/app-container.component';
+import { ListeReferentielComponent } from './referentiel/liste-referentiel/liste-referentiel.component';
+import { AddReferentielComponent } from './referentiel/add-referentiel/add-referentiel.component';
+import { ListeGroupeCompetenceComponent } from './referentiel/groupe-competence/liste-groupe-competence/liste-groupe-competence.component';
+import { AddGroupeCompetenceComponent } from './referentiel/groupe-competence/add-groupe-competence/add-groupe-competence.component';
+import { AddCompetenceComponent } from './referentiel/groupe-competence/competence/add-competence/add-competence.component';
+import { ListeCompetenceComponent } from './referentiel/groupe-competence/competence/liste-competence/liste-competence.component';
+import { ListeProfilSortieComponent } from './profilSortie/liste-profil-sortie/liste-profil-sortie.component';
+import { ProfilSortieDetailsComponent } from './profilSortie/profil-sortie-details/profil-sortie-details.component';
+import { DetailsCompetenceComponent } from './referentiel/groupe-competence/competence/details-competence/details-competence.component';
+import { DetailsGroupeCompetenceComponent } from './referentiel/groupe-competence/details-groupe-competence/details-groupe-competence.component';
+import { DetailsReferentielComponent } from './referentiel/details-referentiel/details-referentiel.component';
+import { CommonCardComponent } from './public/common-card/common-card.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +50,19 @@ import { AppContainerComponent } from './public/app-container/app-container.comp
     NotFoundComponent,
     PaginationComponent,
     ListePromoComponent,
-    AppContainerComponent
+    AppContainerComponent,
+    ListeReferentielComponent,
+    AddReferentielComponent,
+    ListeGroupeCompetenceComponent,
+    AddGroupeCompetenceComponent,
+    AddCompetenceComponent,
+    ListeCompetenceComponent,
+    ListeProfilSortieComponent,
+    ProfilSortieDetailsComponent,
+    DetailsCompetenceComponent,
+    DetailsGroupeCompetenceComponent,
+    DetailsReferentielComponent,
+    CommonCardComponent
   ],
   imports: [
     BrowserModule,

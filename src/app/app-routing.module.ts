@@ -1,3 +1,4 @@
+import { ListeReferentielComponent } from './referentiel/liste-referentiel/liste-referentiel.component';
 import { ListePromoComponent } from './promo/liste-promo/liste-promo.component';
 import { NotFoundComponent } from './public/not-found/not-found.component';
 import { ListeUsersComponent } from './user/liste-users/liste-users.component';
@@ -11,12 +12,12 @@ import { AppContainerComponent } from './public/app-container/app-container.comp
 
 const routes: Routes = [
   {path: 'login', component: ConnexionComponent},
-  { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '', component: AppContainerComponent, canActivate: [AuthGuard], children:[
+  { path: '', redirectTo: 'admin', pathMatch: 'full' },
+  { path: 'admin', component: AppContainerComponent, canActivate: [AuthGuard], children:[
+    { path: 'users', component: ListeUsersComponent, canActivate: [AuthGuard] },
     {
       path:'', redirectTo: 'users', pathMatch: 'full'
     },
-    { path: 'users', component: ListeUsersComponent, canActivate: [AuthGuard] },
     {
       path: 'profils',
       component: ListeProfilComponent, canActivate: [AuthGuard],
@@ -32,6 +33,7 @@ const routes: Routes = [
       ]
     },
     { path: 'promos', component: ListePromoComponent, canActivate: [AuthGuard] },
+    { path: 'referentiels', component: ListeReferentielComponent, canActivate: [AuthGuard] },
   ] },
   
 

@@ -1,1 +1,5 @@
-<p>liste-groupe-competence works!</p>
+<h1 class="mat-display-2 text-center p-2">Liste Groupes de compétences</h1>
+<div class="text-center">
+    <button mat-button mat-raised-button [routerLink]="['/admin/groupecompetences/add']"><mat-icon>add_box</mat-icon>Ajouter</button>
+</div>
+<app-common-card *ngFor="let grpcmp of grpcomptences" [item]=grpcmp [link]="link"></app-common-card>

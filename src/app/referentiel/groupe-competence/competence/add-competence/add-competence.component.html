@@ -1,1 +1,81 @@
-<p>add-competence works!</p>
+<div class="container bg-light p-3">
+  <h1 *ngIf="!called" class="mat-display-2 text-center p-2 m-3">Création de Compétences</h1>
+  <form [formGroup]="registerForm" (submit)="submitted()">
+
+    <mat-form-field *ngIf="!called" appearance="fill" class="form-field w-100">
+      <mat-label>Groupe de compétences</mat-label>
+      <mat-select required formControlName="groupecmp_id">
+        <mat-option *ngFor="let groupecmp of groupecmps" value="{{groupecmp.id}}">{{groupecmp.libelle}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="registerForm.get('groupecmp_id').hasError('required')">
+        Choisir le <strong>Groupe de compétences</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field w-100" appearance="fill">
+      <mat-label>Libelle</mat-label>
+      <input matInput formControlName="libelle" required>
+      <mat-error *ngIf="registerForm.get('libelle').hasError('required')">
+        Le libellé est <strong>requis</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <div class="mt-4 mb-3">
+      <div class="p-2" style="font-size:large;">Niveaux<span class="required text-danger">*</span></div>
+      <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
+        <mat-tab label="niveau 1">
+          <mat-form-field style="width: 49%;" class="form-field" appearance="fill">
+            <mat-label>Groupe d'Actions</mat-label>
+            <textarea [(ngModel)]="niveaux[0].grpAction" matInput formControlName="grpAction1" required></textarea>
+            <mat-error *ngIf="registerForm.get('grpAction1').hasError('required')">
+              Ce champ est <strong>requis</strong>
+            </mat-error>
+          </mat-form-field> 
+          <mat-form-field style="width: 49%;" class="form-field float-right" appearance="fill">
+            <mat-label>Critères d'Evaluation</mat-label>
+            <textarea [(ngModel)]="niveaux[0].critereEval" matInput formControlName="critereEval1" required></textarea>
+            <mat-error *ngIf="registerForm.get('critereEval1').hasError('required')">
+              Ce champ est <strong>requis</strong>
+            </mat-error>
+            </mat-form-field>
+        </mat-tab>
+        <mat-tab label="niveau 2">
+          <mat-form-field style="width: 49%;" class="form-field" appearance="fill">
+            <mat-label>Groupe d'Actions</mat-label>
+            <textarea [(ngModel)]="niveaux[1].grpAction" matInput formControlName="grpAction2" required></textarea>
+            <mat-error *ngIf="registerForm.get('grpAction2').hasError('required')">
+              Ce champ est <strong>requis</strong>
+            </mat-error>
+          </mat-form-field> 
+          <mat-form-field style="width: 49%;" class="form-field float-right" appearance="fill">
+            <mat-label>Critères d'Evaluation</mat-label>
+            <textarea [(ngModel)]="niveaux[1].critereEval" matInput formControlName="critereEval2" required></textarea>
+            <mat-error *ngIf="registerForm.get('critereEval2').hasError('required')">
+              Ce champ est <strong>requis</strong>
+            </mat-error>
+            </mat-form-field>
+        </mat-tab>
+        <mat-tab label="niveau 3">
+          <mat-form-field style="width: 49%;" class="form-field" appearance="fill">
+            <mat-label>Groupe d'Actions</mat-label>
+            <textarea [(ngModel)]="niveaux[2].grpAction" matInput formControlName="grpAction3" required></textarea>
+            <mat-error *ngIf="registerForm.get('grpAction3').hasError('required')">
+              Ce champ est <strong>requis</strong>
+            </mat-error>
+          </mat-form-field> 
+          <mat-form-field style="width: 49%;" class="form-field float-right" appearance="fill">
+            <mat-label>Critères d'Evaluation</mat-label>
+            <textarea [(ngModel)]="niveaux[2].critereEval" matInput formControlName="critereEval3" required></textarea>
+            <mat-error *ngIf="registerForm.get('critereEval3').hasError('required')">
+              Ce champ est <strong>requis</strong>
+            </mat-error>
+            </mat-form-field>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+    
+
+  <button mat-button mat-raised-button color="primary" class="float-right" [disabled]="registerForm.invalid">Valider</button>
+  </form>
+</div>

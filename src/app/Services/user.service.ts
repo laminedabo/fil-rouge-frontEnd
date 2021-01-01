@@ -30,4 +30,8 @@ export class UserService {
     return this.authService.patch('/api/admin/users/search',term);
   }
 
+  getApprenants(){
+    return this.authService.get('/api/admin/users?profil.libelle=APPRENANT');
+  }
+
 }

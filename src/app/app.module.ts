@@ -1,12 +1,13 @@
 import { HTTPInterceptorService } from './parametres/httpinterceptor.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListeProfilComponent } from './profil/liste-profil/liste-profil.component';
 import { ListeUsersComponent } from './user/liste-users/liste-users.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConnexionComponent } from './connexion/connexion.component';
@@ -34,6 +35,18 @@ import { DetailsCompetenceComponent } from './referentiel/groupe-competence/comp
 import { DetailsGroupeCompetenceComponent } from './referentiel/groupe-competence/details-groupe-competence/details-groupe-competence.component';
 import { DetailsReferentielComponent } from './referentiel/details-referentiel/details-referentiel.component';
 import { CommonCardComponent } from './public/common-card/common-card.component';
+import { DetailsPromoComponent } from './promo/details-promo/details-promo.component';
+import { ListeGroupetagsComponent } from './groupetags/liste-groupetags/groupetags.component';
+import { DetailsGroupetagsComponent } from './groupetags/details-groupetags/details-groupetags.component';
+import { AddGroupetagsComponent } from './groupetags/add-groupetags/add-groupetags.component';
+import { ListeApprenantComponent } from './apprenant/liste-apprenant/liste-apprenant.component';
+import { DetailsApprenantComponent } from './apprenant/details-apprenant/details-apprenant.component';
+import { ListeGroupeComponent } from './groupe/liste-groupe/liste-groupe.component';
+import { DetailsGroupeComponent } from './groupe/details-groupe/details-groupe.component';
+import { JumbotronComponent } from './public/jumbotron/jumbotron.component';
+import { AccueilAdminComponent } from './public/accueil-admin/accueil-admin.component';
+import { AddPromoComponent } from './promo/add-promo/add-promo.component';
+import {CustomMatPaginatorIntl} from './parametres/custom-mat-paginator-intl.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +75,18 @@ import { CommonCardComponent } from './public/common-card/common-card.component'
     DetailsCompetenceComponent,
     DetailsGroupeCompetenceComponent,
     DetailsReferentielComponent,
-    CommonCardComponent
+    CommonCardComponent,
+    DetailsPromoComponent,
+    ListeGroupetagsComponent,
+    DetailsGroupetagsComponent,
+    AddGroupetagsComponent,
+    ListeApprenantComponent,
+    DetailsApprenantComponent,
+    ListeGroupeComponent,
+    DetailsGroupeComponent,
+    JumbotronComponent,
+    AccueilAdminComponent,
+    AddPromoComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +100,8 @@ import { CommonCardComponent } from './public/common-card/common-card.component'
 
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HTTPInterceptorService, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: HTTPInterceptorService, multi: true},
+    {provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl}
   ],
   bootstrap: [AppComponent]
 })

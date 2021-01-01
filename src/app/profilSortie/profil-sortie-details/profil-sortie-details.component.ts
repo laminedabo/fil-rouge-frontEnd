@@ -9,6 +9,8 @@ export class ProfilSortieDetailsComponent implements OnInit {
 
   constructor() { }
 
+  
+
   ngOnInit(): void {
   }
 

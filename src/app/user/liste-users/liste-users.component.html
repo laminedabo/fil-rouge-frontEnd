@@ -1,13 +1,16 @@
 <h1 class="mat-display-1 text-center p-2">{{title}}</h1>
 <div style="margin: 20px 20px;">
-    <mat-form-field appearance="fill">
-        <mat-label>Recherche...</mat-label>
-        <input matInput type="text" (keyup)="search($event)" [(ngModel)]="searchValue">
-        <button mat-button *ngIf="!searchValue" matSuffix mat-icon-button aria-label="search"><mat-icon>search</mat-icon></button>
-        <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
-        <mat-icon>close</mat-icon>
-        </button>
-    </mat-form-field>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Recherche...</mat-label>
+            <input matInput type="text" (keyup)="search($event)" [(ngModel)]="searchValue">
+            <button mat-button *ngIf="!searchValue" matSuffix mat-icon-button aria-label="search"><mat-icon>search</mat-icon></button>
+            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+            <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-button mat-raised-button [routerLink]="['/admin/users/add']" class="float-right"><mat-icon class="m-1">person_add</mat-icon>Nouvel utilisateur</button>
+    </div>
     <mat-table [dataSource]="dataSource" class="mat-elevation-z5">
         <ng-container  matColumnDef="avatar">
             <mat-header-cell *matHeaderCellDef>Avatar</mat-header-cell>
@@ -32,9 +35,9 @@
         <ng-container  matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let user">
-                <a #user><button (click)="openDetails(user)" mat-raised-button color="accent"><mat-icon>subject</mat-icon>&nbsp;</button></a>
-                <a #user><button (click)="openEdit(user)" mat-raised-button color="primary"><mat-icon>edit</mat-icon>&nbsp;</button></a>
-                <a #user><button (click)="openDelete(user)" mat-raised-button color="warn"><mat-icon>block</mat-icon>&nbsp;</button></a>
+                <a #user><button (click)="openDetails(user)" mat-raised-button color="accent"><mat-icon matTooltip="Afficher les details">subject</mat-icon>&nbsp;</button></a>
+                <a #user><button (click)="openEdit(user)" mat-raised-button color="primary"><mat-icon matTooltip="Modifier les information">edit</mat-icon>&nbsp;</button></a>
+                <a #user><button (click)="openDelete(user)" mat-raised-button color="warn"><mat-icon matTooltip="Bloquer l'utilisateur">block</mat-icon>&nbsp;</button></a>
             </mat-cell> 
         </ng-container> 
         <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>

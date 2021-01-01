@@ -1,4 +1,4 @@
-import { ReferentielService } from './../../Services/referentiel.service';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,18 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListeReferentielComponent implements OnInit {
 
-  constructor(private referentielService: ReferentielService) { }
+  constructor(private route: ActivatedRoute) { }
 
   referentiels: any;
+  link='referentiels'
 
   ngOnInit(): void {
-    this.referentielService.getReferentiels().subscribe(
-      ref => {
-        this.referentiels = ref;
-        console.log(ref)
+    this.route.data.subscribe(
+      (data: any) => {
+        this.referentiels = data.referentiels;
       },
       error => {
-        console.log(error)
+        console.log(error);
       }
     )
   }

@@ -1,0 +1,14 @@
+<div class="font-weight-bold" style="margin-top: 30px; font-size: 30px;">Mes Groupes</div>
+<mat-form-field appearance="fill">
+    <mat-label>Niveau Groupe</mat-label>
+    <input matInput>
+</mat-form-field>
+
+<button mat-button mat-raised-button color="primary">Ajouter</button>
+<ul>
+    <li class="list-group grp-item"  *ngFor="let grp of groupes">
+        <button mat-raised-button class="mb-2 list-group-item list-group-item-action flex-column align-items-start ">
+          <p class="mb-1">{{grp.libelle}}</p>
+        </button>
+    </li>
+</ul>

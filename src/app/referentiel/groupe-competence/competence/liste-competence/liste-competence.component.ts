@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListeCompetenceComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
+
+  competences: any
+  link='competences'
 
   ngOnInit(): void {
+    this.route.data.subscribe(
+      (data: any) => {
+        this.competences = data.competences
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
 }

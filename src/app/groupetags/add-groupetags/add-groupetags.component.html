@@ -1,0 +1,11 @@
+<form [formGroup]="registerForm" (submit)="submitted()">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Libelle</mat-label>
+      <input matInput formControlName="libelle" required>
+      <mat-error *ngIf="registerForm.get('libelle').hasError('required')">
+        Le libellé est <strong>requis</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <input [disabled]="registerForm.invalid" type="submit" value="Se connecter">
+</form>

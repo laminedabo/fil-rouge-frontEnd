@@ -10,9 +10,9 @@ export class CommonCardComponent implements OnInit {
   constructor() { }
 
   @Input() item: any;
+  @Input() link: any;
 
   ngOnInit(): void {
-    console.log(this.item)
   }
 
 }

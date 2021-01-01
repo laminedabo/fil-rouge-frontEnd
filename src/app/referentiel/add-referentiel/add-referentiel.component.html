@@ -1,1 +1,64 @@
-<p>add-referentiel works!</p>
+<div class="container bg-light mt-5 p-3">
+  <h1 class="mat-display-2 text-center p-2 m-3">Création Referentiel</h1>
+  <form [formGroup]="registerForm" (submit)="submitted()">
+    <mat-form-field class="form-field" appearance="fill" class="w-100">
+      <mat-label>Libelle</mat-label>
+      <input matInput formControlName="libelle" required>
+      <mat-error *ngIf="registerForm.get('libelle').hasError('required')">
+        Le libellé est <strong>requis</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill" class="w-100">
+      <mat-label>Présentation</mat-label>
+      <textarea matInput formControlName="presentation" required></textarea>
+      <mat-error *ngIf="registerForm.get('presentation').hasError('required')">
+        La Présentation est <strong>requise</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>Compétences</mat-label>
+      <mat-chip-list #chipList aria-label="competence selection">
+        <mat-chip
+          *ngFor="let cmp of competences"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(cmp)">
+          {{cmp}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+
+    <mat-form-field  class="w-100" appearance="fill">
+      <ngx-mat-file-input formControlName="program" placeholder="Programme" [accept]="'.pdf'" valuePlaceholder="Choisir le programme" required></ngx-mat-file-input>
+      <mat-icon matSuffix>folder</mat-icon>
+      <mat-error *ngIf="registerForm.get('program').hasError('required')">
+        Choisir un fichier
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('program').hasError('maxContentSize')">
+        La taille ne doit pas depasser {{registerForm.get('program')?.getError('maxContentSize').maxSize | byteFormat}} ({{registerForm.get('program')?.getError('maxContentSize').actualSize
+        | byteFormat}}).
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill" class="w-100">
+      <mat-label>Critères Evaluation</mat-label>
+      <textarea matInput formControlName="critereEval" required></textarea>
+      <mat-error *ngIf="registerForm.get('critereEval').hasError('required')">
+        Ce champ est <strong>requis</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill" class="w-100">
+      <mat-label>Critères D'amission</mat-label>
+      <textarea matInput formControlName="critereAdmi" required></textarea>
+      <mat-error *ngIf="registerForm.get('critereAdmi').hasError('required')">
+        Ce champ est <strong>requis</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-button mat-raised-button color="primary" [disabled]="registerForm.invalid" class="float-right">Valider</button>
+  </form>
+</div>

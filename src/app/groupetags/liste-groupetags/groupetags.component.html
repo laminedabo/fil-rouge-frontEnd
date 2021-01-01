@@ -1,0 +1,5 @@
+<h1 class="mat-display-1 text-center p-2">Liste Groupes de tags</h1>
+<div class="text-center">
+    <a [routerLink]="['/admin/groupetags/add']"><button mat-button mat-raised-button><mat-icon>add_box</mat-icon>Ajouter</button></a>
+</div>
+<app-common-card *ngFor="let grptag of groupetags" [item]=grptag></app-common-card>

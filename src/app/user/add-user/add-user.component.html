@@ -1,6 +1,6 @@
-<div class="container" style="width: 50%; margin: auto; background-color:white;">
+<h1 class="mat-display-2 text-center p-2 m-3">Nouvel Utilisateur</h1>
+<div class="container mt-5" style="margin: auto; background-color:white;">
   <form [formGroup]="registerForm" (submit)="submit()">
-    <p mat-display-1>Nouvel Utilisateur ?</p>
     <mat-form-field class="form-field" appearance="fill">
       <mat-label>Nom</mat-label>
       <input matInput required formControlName="nom">
@@ -50,7 +50,7 @@
       </mat-error>
     </mat-form-field>
 
-    <button type="submit" mat-raised-button color="primary">SOUMETTRE</button>
+    <button class="float-right" [disabled]="registerForm.invalid" type="submit" mat-raised-button color="primary">SOUMETTRE</button>
   </form>
 </div>
 <br><br><br>

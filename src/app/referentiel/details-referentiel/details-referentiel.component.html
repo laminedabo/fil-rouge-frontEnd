@@ -1,1 +1,55 @@
-<p>details-referentiel works!</p>
+<h1 class="mat-display-2 text-center p-2 m-1">Details Reférentiel</h1>
+<div class="container bg-light" style="height: 85%; overflow: auto;">
+    <div class="rounded border col-12 mb-2 ">
+        <div class="h4 align-middle p-2">Libelle:</div>
+        <div class="h5 vline align-middle p-3 text-secondary font-weight-normal">{{referentiel.libelle}}</div>
+    </div>
+
+    <div class="rounded border col-12 mb-2">
+        <div class="h4 align-middle p-2">Présentation:</div>
+        <div class="h5 vline text-secondary p-2 font-weight-normal">{{referentiel.presentation}}</div>
+    </div>
+
+    <div class="rounded border col-12 mb-2">
+        <div class="h4 align-middle p-2">Critères d'admission:</div>
+        <div class="h5 vline text-secondary p-2 font-weight-normal">{{referentiel.critereEvaluation}}</div>
+    </div>
+
+    <div class="rounded border col-12 mb-2">
+        <div class="h4 align-middle p-2">Critères d'évaluation:</div>
+        <div class="h5 vline text-secondary p-2 font-weight-normal">{{referentiel.critereAdmission}}</div>
+    </div>
+
+    <div class="rounded border col-12 mb-2">
+        <div class="h4 align-middle col-12 p-3">Compétences:</div>
+        <div class="h5 vline text-secondary p-2 row">
+            <div class="col-5 d-inline">
+                <div class="m-2 btn btn-light shadow-sm" *ngFor="let cmp of comp">{{cmp.libelle}}</div>
+                <div class="m-2 btn btn-light shadow-sm" *ngFor="let cmp of comp">{{cmp.libelle}}</div>
+            </div>
+            <div class="col-7 d-inline text-center vline2">
+                <button mat-button mat-raised-button class="m-2 d-inline" color="primary">Niveau 1</button>
+                <button mat-button mat-raised-button class="m-2 d-inline">Niveau 2</button>
+                <button mat-button mat-raised-button class="m-2 d-inline">Niveau 3</button>
+                <div class="w-100"><hr></div>
+                <div class="font-weight-normal row">
+                    <div class="col-6"><div class="text-primary">Groupe d'action</div><hr class="w-50"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, exercitationem.</div>
+                    <div class="vline2 col-6"><div class="text-primary">Critère d'évaluation</div><hr class="w-50"> Lorem ipsum dolor sit amet consectetur.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded border col-12 mb-2">
+        <div class="h4 align-middle col-12 p-2">Promos:</div>
+        <div class="vline">
+            <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Cohorte 1<button mat-button><mat-icon>more_vert</mat-icon></button></div>
+            <div class="m-2 btn btn-light shadow-sm p-3"  style="height: 60px;">Cohorte 2<button mat-button><mat-icon>more_vert</mat-icon></button></div>
+            <div class="m-2 btn btn-light shadow-sm p-3"  style="height: 60px;">Cohorte 3<button mat-button><mat-icon>more_vert</mat-icon></button></div>
+        </div>
+    </div>
+    <div class="m-3 float-right pb-5">
+        <button class="m-2" mat-raised-button mat-button color="accent">Editer</button>
+        <button class="m-2" mat-raised-button mat-button color="primary">Voir le programme</button>
+        <button class="m-2" mat-raised-button mat-button color="accent">Telecharger en PDF</button>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+.apr-item{
+    cursor: pointer;
+    border-radius: 2%;
+    margin: 20px 0;
+}
+
+.apr-item:active{
+    background-color: blue;
+}
+
+mat-icon{
+    visibility: hidden;
+  }
+  
+  button:hover div button mat-icon{
+    visibility: visible;
+}

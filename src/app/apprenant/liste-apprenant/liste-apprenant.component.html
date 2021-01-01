@@ -1,0 +1,15 @@
+<div class="font-weight-bold" style="margin-top: 30px; font-size: 25px;">Les Apprenants de la promo</div>
+<mat-list role="list">
+    <div class="list-group apr-item"  *ngFor="let apr of apprenants">
+        <button mat-raised-button class="list-group-item list-group-item-action flex-column align-items-start ">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1"></h5>
+            <small>3 jours</small>
+          </div>
+          <p class="mb-1">{{apr.prenom}} {{apr.nom}}</p>
+          <div>
+            <small>{{apr.email}}</small> <button mat-icon-button style="position: absolute; right: 10px;" matTooltip="Plus"><mat-icon>more_vert</mat-icon></button>
+          </div>
+        </button>
+      </div>
+</mat-list>

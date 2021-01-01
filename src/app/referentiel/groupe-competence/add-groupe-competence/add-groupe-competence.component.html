@@ -1,1 +1,69 @@
-<p>add-groupe-competence works!</p>
+<div class="container bg-light p-3">
+  <h1 class="mat-display-2 text-center p-2 m-3">Création Groupe de Competences</h1>
+  <form [formGroup]="registerForm" (submit)="submitted()">
+    <mat-form-field class="form-field" appearance="fill" class="w-100">
+      <mat-label>Libelle</mat-label>
+      <input matInput formControlName="libelle" required>
+      <mat-error *ngIf="registerForm.get('libelle').hasError('required')">
+        Le libellé est <strong>requis</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill" class="w-100">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="descriptif" required></textarea>
+      <mat-error *ngIf="registerForm.get('descriptif').hasError('required')">
+        La Description est <strong>requise</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="fill">
+      <mat-label>Compétences</mat-label>
+      <mat-chip-list #chipList aria-label="competence selection">
+        <mat-chip
+          *ngFor="let cmp of competences"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(cmp)">
+          {{cmp}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input
+          placeholder="Taper une compétence..."
+          #cmpInput
+          [formControl]="cmpCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)">
+      <button (click)="newCompetence()" [disabled]="newCmp" mat-icon-button matSuffix type="button" matTooltip="Créer une nouvelle compétence"><mat-icon>add_box</mat-icon></button>
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let cmp of filteredcompetences | async" [value]="cmp">
+          {{cmp}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <div *ngIf="newCmp">
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Créer une compétence
+            </mat-panel-title>
+            <mat-panel-description>
+              {{panelOpenState ? 'Fermer' : 'Ouvrir'}}
+              <button (click)="cancel()" mat-icon-button mat-button type="button" matTooltip="Annuler la création de compétence"><mat-icon>clear</mat-icon></button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <app-add-competence [called]=true [grpCmpId]=2></app-add-competence>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <button mat-button mat-raised-button color="primary" [disabled]="registerForm.invalid || newCmp" class="float-right mt-3 mb-5">Valider</button>
+  </form>
+</div>
+

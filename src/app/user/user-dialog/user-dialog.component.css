@@ -9,6 +9,7 @@
 
 .details{
     background-image: url('./bg.webp');
+    background-color: navy;
     background-attachment: fixed;
     padding: 5%;
     text-align: justify;

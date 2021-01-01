@@ -1,1 +1,5 @@
-<app-common-card *ngFor="let ref of referentiels" [item]=ref></app-common-card>
+<h1 class="mat-display-2 text-center p-2">Liste Referentiels</h1>
+<div class="text-center">
+    <button mat-button mat-raised-button [routerLink]="['/admin/referentiels/add']"><mat-icon>add_box</mat-icon>Ajouter</button>
+</div>
+<app-common-card *ngFor="let ref of referentiels" [item]=ref [link]="link"></app-common-card>

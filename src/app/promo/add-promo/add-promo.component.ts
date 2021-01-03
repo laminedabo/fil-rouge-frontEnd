@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -53,6 +54,7 @@ export class AddPromoComponent implements OnInit {
       'libelle':'Data scientist'
     }
   ]
+  avatar:any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -94,7 +96,8 @@ export class AddPromoComponent implements OnInit {
     const value = event.value;
 
     // Add our aprMail
-    if ((value || '').trim()) {
+    if ((value || '').trim() && this.validateEmail(value) && (this.apprenants.indexOf(value)==-1)) {
+      console.log(this.apprenants.indexOf(value))
       this.apprenants.push(value.trim());
     }
 
@@ -115,9 +118,11 @@ export class AddPromoComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.apprenants.push(event.option.viewValue);
-    this.aprMailInput.nativeElement.value = '';
-    this.aprMailCtrl.setValue(null);
+    if (this.apprenants.indexOf(event.option.viewValue)==-1) {
+      this.apprenants.push(event.option.viewValue);
+      this.aprMailInput.nativeElement.value = '';
+      this.aprMailCtrl.setValue(null);
+    } 
   }
 
   private _filter(value: string): string[] {
@@ -126,4 +131,77 @@ export class AddPromoComponent implements OnInit {
     return this.apprenants.filter(aprMail => aprMail.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  validateEmail(email: string) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+
+// ****************************************** DRAG   ND DROP *************************************//
+  public files: NgxFileDropEntry[] = [];
+  imgName: string;
+ 
+  public dropped(files: NgxFileDropEntry[]) {
+    this.files = files;
+    for (const droppedFile of files) {
+ 
+      // Is it a file?
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+          this.getImgBase64(file);
+          this.imgName = droppedFile.relativePath;
+ 
+          // Here you can access the real file
+          console.log(droppedFile.relativePath, file);
+ 
+          /**
+          // You could upload it like this:
+          const formData = new FormData()
+          formData.append('logo', file, relativePath)
+ 
+          // Headers
+          const headers = new HttpHeaders({
+            'security-token': 'mytoken'
+          })
+ 
+          this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
+          .subscribe(data => {
+            // Sanitized logo returned from backend
+          })
+          **/
+ 
+        });
+      } else {
+        // It was a directory (empty directories are added, otherwise only files)
+        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+        console.log(droppedFile.relativePath, fileEntry);
+      }
+    }
+  }
+ 
+  public fileOver(event: Event){
+    console.log(event);
+  }
+ 
+  public fileLeave(event: Event){
+    console.log(event);
+  }
+
+  getImgBase64(file: File) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      console.log(reader.result)
+      this.avatar = reader.result as string;
+    };
+    reader.onerror = (error) => {
+      console.log('Error: ', error);
+    };
+  }
+
+  idRef: number
+  refChosen(ref:any){
+    this.idRef = ref.id;
+  }
 }

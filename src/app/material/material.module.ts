@@ -28,8 +28,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule} from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatStepperModule } from '@angular/material/stepper';
-import { MatTabsModule } from '@angular/material/tabs'
-
+import { MatTabsModule } from '@angular/material/tabs';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const MaterialComponents = [
   CommonModule,
@@ -59,7 +59,8 @@ const MaterialComponents = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatStepperModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSnackBarModule
 ]
 
 @NgModule({

@@ -28,8 +28,22 @@
           {{cmp}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
+        <input
+          placeholder="Taper une compétence..."
+          #cmpInput
+          [formControl]="cmpCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let cmp of filteredcompetences | async" [value]="cmp">
+          {{cmp}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
+
 
     <mat-form-field  class="w-100" appearance="fill">
       <ngx-mat-file-input formControlName="program" placeholder="Programme" [accept]="'.pdf'" valuePlaceholder="Choisir le programme" required></ngx-mat-file-input>

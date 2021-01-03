@@ -39,7 +39,7 @@
     </mat-form-field>
      
     <mat-form-field appearance="fill" class="form-field">
-      <ngx-mat-file-input formControlName="avatar" placeholder="Image" valuePlaceholder="Aucune image séléctionnée" required></ngx-mat-file-input>
+      <ngx-mat-file-input formControlName="avatar" (change)="imgChange($event)" placeholder="Image" valuePlaceholder="Aucune image séléctionnée" required></ngx-mat-file-input>
       <mat-icon matSuffix>folder</mat-icon>
       <mat-error *ngIf="registerForm.get('avatar').hasError('required')">
         Choisir une image
@@ -49,6 +49,9 @@
         | byteFormat}}).
       </mat-error>
     </mat-form-field>
+    <div *ngIf="avatar" class="text-center" style="margin: 30px;">
+      <img class="img-fluid" style="height: 250px; width: 240px; border-radius: 10%;" src="{{ avatar }}" alt="avatar de la promo">
+    </div>
 
     <button class="float-right" [disabled]="registerForm.invalid" type="submit" mat-raised-button color="primary">SOUMETTRE</button>
   </form>

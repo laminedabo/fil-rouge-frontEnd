@@ -1,0 +1,14 @@
+<div class="h4 align-middle col-12 p-3">Compétences:</div>
+<div class="h5 vline text-secondary p-2 row">
+    <div class="col-5 d-inline">
+        <button mat-button mat-raised-button class="m-2 p-2" *ngFor="let cmp of competences" [color]="idCmp===cmp.id?'primary':''" (click)="cmptenceClicked(cmp)"> {{cmp.libelle}} </button>
+    </div>
+    <div class="col-7 d-inline text-center vline2">
+        <button mat-button mat-raised-button class="m-2 d-inline" *ngFor="let niveau of niveaux" [color]="idNiv===niveau.id?'primary':''" (click)="niveauClicked(niveau)">{{niveau.libelle}}</button>
+        <div class="w-100"><hr></div>
+        <div class="font-weight-normal row">
+            <div class="col-6"><div class="text-primary">Groupe d'action</div><hr class="w-50"> {{grpAction}} </div>
+            <div class="vline2 col-6"><div class="text-primary">Critère d'évaluation</div><hr class="w-50"> {{critereEval}} </div>
+        </div>
+    </div>
+</div>

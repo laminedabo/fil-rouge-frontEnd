@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserService } from 'src/app/Services/user.service';
 import { FileValidator } from 'ngx-material-file-input';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-user',
@@ -12,7 +12,12 @@ import { FileValidator } from 'ngx-material-file-input';
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private profilService: ProfilService) { }
+  constructor(
+    private userService: UserService,
+    private formBuilder: FormBuilder,
+    private profilService: ProfilService,
+    private _snackBar: MatSnackBar
+    ) { }
 
   registerForm: FormGroup;
   profils: any;
@@ -41,6 +46,10 @@ export class AddUserComponent implements OnInit {
     return this.registerForm.controls;
   }
 
+  imgChange(event: Event){
+    this.getBase64(this.registerForm.value.avatar.files[0]);
+  }
+
   submit(){
     if (this.registerForm.invalid) {
       return;
@@ -58,6 +67,8 @@ export class AddUserComponent implements OnInit {
         console.log(data);
         this.sendEvent();
         this.registerForm.reset();
+        this.avatar = '';
+        this.openSnackBar("Utilisateur ajouté avec succès", "Okey");
       },
       err => {
         console.log('error:  ')
@@ -69,6 +80,25 @@ export class AddUserComponent implements OnInit {
   @Output() userIsCreated = new EventEmitter();
   sendEvent(){
     this.userIsCreated.emit(`userCreated`);
+  }
+
+  avatar:any;
+
+  getBase64(file: File) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.avatar = reader.result as string;
+    };
+    reader.onerror = (error) => {
+      console.log('Error: ', error);
+    };
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 }

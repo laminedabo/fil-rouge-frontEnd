@@ -9,13 +9,11 @@
         <div class="h4 align-middle col-12 p-3">Niveaux: </div>
         <div class="h5  text-secondary p-2 row">
             <div class="col-12 d-inline text-center vline2">
-                <button mat-button mat-raised-button class="m-2 d-inline" color="primary">Niveau 1</button>
-                <button mat-button mat-raised-button class="m-2 d-inline">Niveau 2</button>
-                <button mat-button mat-raised-button class="m-2 d-inline">Niveau 3</button>
+                <button mat-button mat-raised-button class="m-2 d-inline" *ngFor="let niveau of niveaux" [color]="idNiv===niveau.id?'primary':''" (click)="niveauClicked(niveau)">{{niveau.libelle}}</button>
                 <div class="w-100"><hr></div>
                 <div class="font-weight-normal row">
-                    <div class="col-6"><div class="text-primary">Groupe d'action</div><hr class="w-50"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, exercitationem.</div>
-                    <div class="vline2 col-6"><div class="text-primary">Critère d'évaluation</div><hr class="w-50"> Lorem ipsum dolor sit amet consectetur.</div>
+                    <div class="col-6"><div class="text-primary">Groupe d'action</div><hr class="w-50"> {{grpAction}} </div>
+                    <div class="vline2 col-6"><div class="text-primary">Critère d'évaluation</div><hr class="w-50"> {{critereEval}} </div>
                 </div>
             </div>
         </div>

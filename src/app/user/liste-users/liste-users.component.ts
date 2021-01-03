@@ -2,6 +2,7 @@ import { ProfilService } from './../../Services/profil.service';
 import { ProfilDetailsComponent } from './../../profil/profil-details/profil-details.component';
 import { User } from './../../Entity/User';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../Services/user.service';
 import { PageEvent } from "@angular/material/paginator";
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
@@ -17,16 +18,19 @@ import { AuthService } from 'src/app/parametres/auth.service';
 
 export class ListeUsersComponent implements OnInit {
 
-  constructor(private userService: UserService, private matDialog: MatDialog, 
+  constructor(
+    private userService: UserService, private matDialog: MatDialog, 
     private authService: AuthService, private profilDetail: ProfilDetailsComponent,
-    private profilService: ProfilService) { }
+    private profilService: ProfilService,
+    private _snackBar: MatSnackBar
+    ) { }
 
   title = 'Liste des Utilisateurs';
   dataSource : any[];
 
   myPageEvent: PageEvent;
   myPageIndex = 1;
-  myPageSize:number;
+  myPageSize:10;
   myLength:number;
 
   searchValue = '';
@@ -62,7 +66,7 @@ export class ListeUsersComponent implements OnInit {
     
   }
 
-  getTotalMembers(i: number){
+  getTotalMembers(i?: number){
     this.userService.getCount(i).subscribe(
       data => {
         this.myLength = data;
@@ -116,6 +120,7 @@ export class ListeUsersComponent implements OnInit {
             this.userService.getUsers(this.myPageIndex).subscribe(
               data => {
                 this.dataSource = data
+                this.openSnackBar("Vous avez bloqué cet utilisateur", "Okey");               
               }
             );
             console.log(res)
@@ -154,7 +159,7 @@ export class ListeUsersComponent implements OnInit {
 
   updateTable(event:any){
     if (event=='userCreated') {
-      this.userService.getUsers(Math.round(this.myLength/this.myPageSize)).subscribe(
+      this.userService.getUsers(Math.round(this.myLength/10)).subscribe(
         data => {
           this.dataSource = data
         }
@@ -174,5 +179,12 @@ export class ListeUsersComponent implements OnInit {
       }
     )
   }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
 
 }

@@ -19,12 +19,17 @@ export class ListeGroupeComponent implements OnInit {
       "libelle":'Groupe 2'
     },
     {
-      "id":1,
+      "id":3,
       "libelle":'Groupe 3'
     }
   ]
 
   ngOnInit(): void {
+    this.grpClicked(this.groupes[0])
   }
 
+  idGrp: number
+  grpClicked(grp:any){
+    this.idGrp = grp.id;
+  }
 }

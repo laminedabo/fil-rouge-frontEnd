@@ -22,7 +22,7 @@ export class UserService {
     return this.authService.post('/api/admin/users/'+id,user);
   }
 
-  getCount(profil: number){
+  getCount(profil?: number){
     return this.authService.patch('/api/admin/users/count',{'profil':profil});
   }
 

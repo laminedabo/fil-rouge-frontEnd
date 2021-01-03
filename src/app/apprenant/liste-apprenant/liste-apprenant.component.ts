@@ -8,18 +8,24 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class ListeApprenantComponent implements OnInit {
 
-  apprenants: any;
+  apprenants: any[];
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.userService.getApprenants().subscribe(
       data => {
         this.apprenants = data;
+        this.apprClicked(this.apprenants[0])
       },
       error => {
         console.log(error)
       }
     )
+  }
+
+  idAppr: number
+  apprClicked(appr:any){
+    this.idAppr = appr.id;
   }
 
 }

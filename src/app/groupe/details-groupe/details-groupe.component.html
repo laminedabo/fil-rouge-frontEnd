@@ -1,8 +1,45 @@
-<div class="font-weight-bold" style="margin-top: 30px; font-size: 25px;">Liste des Apprenants</div>
-<mat-list role="list" class="commonX">
+<!-- <div  class="mb-5">
+  <mat-list role="list" class="col col-sm-6 float-left commonX" style="height: 250px; overflow: auto;">
+  <div class="font-weight-bold" style="font-size: 18px;">Les apprenants du groupe</div>
     <div class="list-group apr-item"  *ngFor="let apr of apprenants">
-        <div mat-raised-button class="list-group-item list-group-item-action flex-column align-items-start ">
-          <p class="mb-1">{{apr.prenom}} {{apr.nom}}</p>
+        <div mat-raised-button class="list-group-item list-group-item-action flex-column align-items-start" style="cursor: pointer;">
+          <p class="mb-1"></p>
         </div>
-      </div>
-</mat-list>
+    </div>
+  </mat-list>
+  <mat-list role="list" class="col col-sm-6 commonX" style="height: 250px; overflow: auto;">
+  <div class="font-weight-bold" style="font-size: 18px;">Liste des Apprenants</div>
+    <div class="list-group apr-item"  *ngFor="let apr of apprenants">
+        <div mat-raised-button class="list-group-item list-group-item-action flex-column align-items-start" style="cursor: pointer;">
+          <p class="mb-1"></p>
+        </div>
+    </div>
+  </mat-list>
+</div> -->
+
+<div class="mb-5" cdkDropListGroup>
+  <div class="col col-sm-6 float-left commonX" style="height: 250px; overflow: auto;">
+    <div class="font-weight-bold" style="font-size: 18px;">Les apprenants du groupe</div>
+    
+    <div
+      cdkDropList
+      [cdkDropListData]="apprenants"
+      class="example-list"
+      cdkDropListSortingDisabled
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let apr of apprenants" cdkDrag>{{apr.prenom}} {{apr.nom}}</div>
+    </div>
+  </div>
+
+  <div class="col col-sm-6 float-left commonX" style="height: 250px; overflow: auto;">
+    <div class="font-weight-bold" style="font-size: 18px;">Liste des Apprenants</div>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="apprenants"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let apr of apprenants" cdkDrag>{{apr.prenom}} {{apr.nom}}</div>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxFileDropModule } from 'ngx-file-drop'
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -47,6 +49,7 @@ import { JumbotronComponent } from './public/jumbotron/jumbotron.component';
 import { AccueilAdminComponent } from './public/accueil-admin/accueil-admin.component';
 import { AddPromoComponent } from './promo/add-promo/add-promo.component';
 import {CustomMatPaginatorIntl} from './parametres/custom-mat-paginator-intl.service';
+import { CompetenceNiveauComponent } from './referentiel/competence-niveau/competence-niveau.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +89,8 @@ import {CustomMatPaginatorIntl} from './parametres/custom-mat-paginator-intl.ser
     DetailsGroupeComponent,
     JumbotronComponent,
     AccueilAdminComponent,
-    AddPromoComponent
+    AddPromoComponent,
+    CompetenceNiveauComponent
   ],
   imports: [
     BrowserModule,
@@ -97,6 +101,8 @@ import {CustomMatPaginatorIntl} from './parametres/custom-mat-paginator-intl.ser
     FormsModule, 
     ReactiveFormsModule,
     FlexLayoutModule,
+    NgxFileDropModule,
+    DragDropModule
 
   ],
   providers: [

@@ -84,9 +84,11 @@ export class AddGroupeCompetenceComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.competences.push(event.option.viewValue);
-    this.cmpInput.nativeElement.value = '';
-    this.cmpCtrl.setValue(null);
+    if (this.competences.indexOf(event.option.viewValue)==-1) {
+      this.competences.push(event.option.viewValue);
+      this.cmpInput.nativeElement.value = '';
+      this.cmpCtrl.setValue(null); 
+    }
   }
 
   private _filter(value: string): string[] {

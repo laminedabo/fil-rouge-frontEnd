@@ -99,7 +99,7 @@
       <form [formGroup]="registerForm" (submit)="submitted()">
         <ng-template matStepLabel>Reférentiel et Apprenants</ng-template>
           <div class="p-2" style="font-size:x-large;">Reférentiel<span class="required text-danger">*</span></div>
-          <button mat-button mat-raised-button class="p-4 h3 m-4" style="font-size:large;" *ngFor="let ref of referentiels" [color]="idRef===ref.id?'accent':''" (click)="refChosen(ref)">{{ref.libelle}}</button>
+          <button type="button" mat-button mat-raised-button class="p-4 h3 m-4" style="font-size:large;" *ngFor="let ref of referentiels" [color]="idRef===ref.id?'accent':''" (click)="refChosen(ref)">{{ref.libelle}}</button>
 
           <div class="p-2" style="font-size:x-large;">Apprenants</div>
         <mat-form-field class="w-100" appearance="fill">
@@ -143,7 +143,7 @@
 
         <div>
           <button mat-button mat-raised-button color="accent" matStepperPrevious>Revoir</button>
-          <button mat-button mat-raised-button color="primary" class="float-right" matStepperNext>Suivant</button>
+          <button type="button" mat-button mat-raised-button color="primary" class="float-right" matStepperNext>Suivant</button>
         </div>
       </form>
     </mat-step>
@@ -158,19 +158,19 @@
         (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
               Glisser et déposer ou &nbsp;
-              <button mat-button mat-raised-button type="button" (click)="openFileSelector()">Choisr une image</button>
+              <button mat-button mat-raised-button type="button" (click)="openFileSelector()">Choisir une image</button>
             </ng-template>
         </ngx-file-drop>
         <div *ngIf="imgName" class="text-center" style="margin: 30px;">
           <strong class="d-block mb-3">{{ imgName }}</strong>
-          <img class="img-fluid" style="height: 400px; width: 350px;" src="{{ avatar }}" alt="avatar de la promo">
+          <img class="img-fluid rounded" style="height: 400px; width: 350px;" src="{{ avatar }}" alt="avatar de la promo">
         </div>
       </div>
       <div>
         <button mat-button mat-button mat-raised-button color="accent" matStepperPrevious>Revoir</button>
         <button mat-button mat-raised-button color="warn" class="float-right" (click)="stepper.reset()">Annuler tout</button>
       </div>
-    <button class="float-right mt-5" mat-raised-button mat-button [disabled]="registerForm.invalid" type="submit">Valider la création de la promo</button>
+    <button class="float-right mt-5" mat-raised-button mat-button [disabled]="registerForm.invalid" type="submit" (click)="submitted()">Valider la création de la promo</button>
     </mat-step>
   </mat-horizontal-stepper>
 </div>

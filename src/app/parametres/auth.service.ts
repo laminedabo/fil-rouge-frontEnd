@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   // Test de connectivité du user
-  public isConnected(){
+  public isConnected(): boolean{
     return this.localStorage.get("token") && !this.jwt.isTokenExpired();
   }
 

@@ -16,7 +16,7 @@ export class HTTPInterceptorService implements HttpInterceptor{
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
     const token = this.jwtService.getToken();
-    if (token !== null) {
+    if (token !== null && request.url!='/api/login_check') {
       if (this.jwtService.isTokenExpired()) {
         console.log('expired token');
         this.router.navigateByUrl('/login');

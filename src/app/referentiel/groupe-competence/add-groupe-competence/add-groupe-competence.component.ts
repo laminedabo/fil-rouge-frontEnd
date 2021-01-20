@@ -1,3 +1,5 @@
+import { GroupeCompetenceService } from './../../../Services/groupe-competence.service';
+import { CompetenceService } from './../../../Services/competence.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -7,6 +9,7 @@ import {FormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { Competence } from '../competence/competence';
 
 @Component({
   selector: 'app-add-groupe-competence',
@@ -16,15 +19,14 @@ import {map, startWith} from 'rxjs/operators';
 export class AddGroupeCompetenceComponent implements OnInit {
 
   registerForm: FormGroup;
-  competences: string[] = ["Développer le front-end d'une application web", "Réaliser une application avec wordPress","Développer le back-end d'une application web"];
-  visible = true;
+  competences: Competence[] = [] ;
+  allCompetences: Competence[] = [] ;
   selectable = true;
   removable = true;
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   cmpCtrl = new FormControl();
-  filteredcompetences: Observable<string[]>;
-  competence: string[] = [''];
+  filteredcompetences: Observable<Competence[]>;
 
   @ViewChild('cmpInput') cmpInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
@@ -34,6 +36,8 @@ export class AddGroupeCompetenceComponent implements OnInit {
 
   constructor(
       private formBuilder: FormBuilder,
+      private competenceService: CompetenceService,
+      private groupeCompetenceService: GroupeCompetenceService
   ) { }
 
   ngOnInit(): void {
@@ -42,10 +46,18 @@ export class AddGroupeCompetenceComponent implements OnInit {
       descriptif: ['',{ validators: [Validators.required], updateOn: "change" }],
     });
 
+    this.competenceService.getCompetences().subscribe(
+      (data:Competence[])=> {
+        this.allCompetences = data;
+      },
+      error => {
+        console.log(error)
+      }
+    )
+
     this.filteredcompetences = this.cmpCtrl.valueChanges.pipe(
       startWith(null),
-      map((cmp: string | null) => cmp ? this._filter(cmp) : this.competences.slice()));
-    
+      map((libelle: string | null) => libelle ? this._filter(libelle) : this.allCompetences.slice()));
   }
 
   get formControls(){
@@ -56,15 +68,37 @@ export class AddGroupeCompetenceComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+    console.log(this.competences);
+    const grpCmptence:any = this.registerForm.value;
+    grpCmptence.competence = this.competences;
+    this.groupeCompetenceService.addGroupecompetence(grpCmptence).subscribe(
+      result => {
+        console.log(result)
+        this.registerForm.reset();
+        this.competences = [];
+      },
+      error => {
+        console.log(error)
+      }
+    );
   }
 
+  newCmptence(cmp:any){
+    this.competences.push(cmp);
+    this.newCmp = false;
+  }
+
+  //competence from autocomplete
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
+    var cmp: Competence = {
+      'libelle':value
+    };
 
     // Add our cmp
-    if ((value || '').trim()) {
-      this.competences.push(value.trim());
+    if ((value || '').trim() && this._filterExact(cmp.libelle)[0]) {
+      // this.competences.push(cmp); on ne fait rien...
     }
 
     // Reset the input value
@@ -75,7 +109,7 @@ export class AddGroupeCompetenceComponent implements OnInit {
     this.cmpCtrl.setValue(null);
   }
 
-  remove(cmp: string): void {
+  remove(cmp: Competence): void {
     const index = this.competences.indexOf(cmp);
 
     if (index >= 0) {
@@ -84,17 +118,32 @@ export class AddGroupeCompetenceComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    if (this.competences.indexOf(event.option.viewValue)==-1) {
-      this.competences.push(event.option.viewValue);
+    const cmp: Competence = event.option.value;
+    if (this.competences.indexOf(cmp)==-1) {
+      this.competences.push(cmp);
       this.cmpInput.nativeElement.value = '';
       this.cmpCtrl.setValue(null); 
     }
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  private _filter(value: string): Competence[] {
+    const filterValue = value;
 
-    return this.competences.filter(cmp => cmp.toLowerCase().indexOf(filterValue) === 0);
+    return this.allCompetences.filter((cmp: Competence) => this.toLowerCase(cmp.libelle).includes(this.toLowerCase(filterValue)));
+  }
+
+  //not used
+  private _filterExact(value: string): Competence[] {
+    const filterValue = value;
+
+    return this.allCompetences.filter((cmp: Competence) => cmp.libelle == filterValue);
+  }
+
+  toLowerCase(ch: string):string{
+    if (ch) {
+    return String(ch).toLocaleLowerCase()
+    }
+    return
   }
 
   newCompetence(){

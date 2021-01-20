@@ -10,7 +10,15 @@ import { Component, OnInit } from '@angular/core';
 export class DetailsReferentielComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private referentielService: ReferentielService) { }
-  referentiel: any;
+  referentiel = {
+    "libelle" : "",
+    "presentation" : "",
+    "programme": File,
+    "critereAdmission" : "",
+    "critereEvaluation" : "",
+    "promos": [],
+    "groupecompetence": []
+  };
   groupecomp: any;
   comp: any;
   niveaux: any;

@@ -25,6 +25,7 @@ export class DetailsGroupeComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event.previousContainer)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

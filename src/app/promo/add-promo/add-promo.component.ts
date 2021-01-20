@@ -89,6 +89,7 @@ export class AddPromoComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+    console.log(this.registerForm.value)
   }
 
   add(event: MatChipInputEvent): void {
@@ -137,7 +138,7 @@ export class AddPromoComponent implements OnInit {
 }
 
 
-// ****************************************** DRAG   ND DROP *************************************//
+// ****************************************** DRAG   AND DROP *************************************//
   public files: NgxFileDropEntry[] = [];
   imgName: string;
  

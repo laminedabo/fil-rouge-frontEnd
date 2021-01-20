@@ -25,7 +25,7 @@
           [selectable]="selectable"
           [removable]="removable"
           (removed)="remove(cmp)">
-          {{cmp}}
+          {{cmp.libelle}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
         <input
@@ -40,7 +40,7 @@
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
         <mat-option *ngFor="let cmp of filteredcompetences | async" [value]="cmp">
-          {{cmp}}
+          {{cmp.libelle}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -58,7 +58,7 @@
               <button (click)="cancel()" mat-icon-button mat-button type="button" matTooltip="Annuler la création de compétence"><mat-icon>clear</mat-icon></button>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <app-add-competence [called]=true [grpCmpId]=2></app-add-competence>
+          <app-add-competence [called]=true (competenceEvent)="newCmptence($event)"></app-add-competence>
         </mat-expansion-panel>
       </mat-accordion>
     </div>

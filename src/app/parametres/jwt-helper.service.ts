@@ -13,7 +13,7 @@ export class JWTTokenService {
   
 
   helper = new JwtHelperService();
-  jwtToken: string = '';
+  jwtToken: string = this.getToken();
   decodedToken: {[key: string]: string}
 
   
@@ -61,6 +61,6 @@ export class JWTTokenService {
     if (this.jwtToken) {
       return this.helper.isTokenExpired(this.jwtToken);
     }
-    return
+    return false
   }
 }

@@ -2,7 +2,7 @@
   <h1 *ngIf="!called" class="mat-display-2 text-center p-2 m-3">Création de Compétences</h1>
   <form [formGroup]="registerForm" (submit)="submitted()">
 
-    <mat-form-field class="w-100" appearance="fill">
+    <mat-form-field *ngIf="!called" class="w-100" appearance="fill">
       <mat-label>Groupe de Compétences <span class="required text-danger">*</span></mat-label>
       <mat-chip-list #chipList aria-label="competence selection">
         <mat-chip

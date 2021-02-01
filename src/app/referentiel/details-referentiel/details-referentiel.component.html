@@ -31,9 +31,23 @@
             <div class="m-2 btn btn-light shadow-sm p-3"  style="height: 60px;">Cohorte 3<button mat-button><mat-icon>more_vert</mat-icon></button></div>
         </div>
     </div>
-    <div class="m-3 float-right pb-5">
-        <button class="m-2" mat-raised-button mat-button color="accent">Editer</button>
-        <button class="m-2" mat-raised-button mat-button color="primary">Voir le programme</button>
-        <button class="m-2" mat-raised-button mat-button color="accent">Telecharger en PDF</button>
+
+    <div class="d-block vline">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title class="h4">
+                Programme
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div #program></div>
+        </mat-expansion-panel>
+    </div>
+
+    <div class="m-3 pb-5">
+        <button class="float-right m-2" mat-raised-button mat-button color="accent">Editer</button>
+        <button class="float-right m-2" mat-raised-button mat-button color="primary" (click)="generatePdf()">Obtenir le Referentiel (PDF)</button>
     </div>
 </div>

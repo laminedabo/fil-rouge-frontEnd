@@ -1,3 +1,4 @@
+import { ReferentielService } from './../../Services/referentiel.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
@@ -8,6 +9,7 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FileValidator } from 'ngx-material-file-input';
+import { Promo } from '../promo';
 
 
 @Component({
@@ -42,23 +44,17 @@ export class AddPromoComponent implements OnInit {
 
   referentiels = [
     {
-      id:1,
-      'libelle':'Developpeur.se web/mobile'
-    },
-    {
-      id:2,
-      'libelle':'Referent digital'
-    },
-    {
-      id:3,
-      'libelle':'Data scientist'
+      id: null,
+      'libelle':''
     }
   ]
   avatar:any;
 
   constructor(
+    private promo: Promo,
     private formBuilder: FormBuilder,
-  ) { }
+    private refService: ReferentielService
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -69,12 +65,21 @@ export class AddPromoComponent implements OnInit {
       refAgate: ['',{ validators: [Validators.required], updateOn: "change" }],
       fabrique: ['',{ validators: [Validators.required], updateOn: "change" }],
       dateDebut: ['',{ validators: [Validators.required], updateOn: "change" }],
-      dateFin: ['',{ validators: [Validators.required], updateOn: "change" }],
+      dateFinProvisoire: ['',{ validators: [Validators.required], updateOn: "change" }],
       exelFile: [
         undefined,
         [FileValidator.maxContentSize(this.maxSize)]
       ],
     });
+
+    this.refService.getReferentiels().subscribe(
+      data => {
+        this.referentiels = data;
+      },
+      error => {
+        console.log(error)
+      }
+    )
 
     this.filteredapprenants = this.aprMailCtrl.valueChanges.pipe(
       startWith(null),
@@ -89,9 +94,20 @@ export class AddPromoComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    console.log(this.registerForm.value)
+    this.promo = this.registerForm.value
+    if (this.apprenants.length !==null) {
+      this.promo.apprenants = this.apprenants;
+    }
+    if (this.idRef !== null) {
+      this.promo.referentiel = `/admin/referentiels/${this.idRef}`
+    }
+    if (this.avatar_promo !== null) {
+      this.promo.avatar = this.avatar_promo
+    }
+    console.log(this.promo)
   }
 
+  // mails from chips
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
@@ -141,6 +157,7 @@ export class AddPromoComponent implements OnInit {
 // ****************************************** DRAG   AND DROP *************************************//
   public files: NgxFileDropEntry[] = [];
   imgName: string;
+  avatar_promo: File = null;
  
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
@@ -150,11 +167,13 @@ export class AddPromoComponent implements OnInit {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
+          this.avatar_promo = file;
+          // console.log(this.promo.avatar)
           this.getImgBase64(file);
           this.imgName = droppedFile.relativePath;
  
           // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
+          // console.log(droppedFile.relativePath, file);
  
           /**
           // You could upload it like this:
@@ -193,7 +212,7 @@ export class AddPromoComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      console.log(reader.result)
+      // console.log(reader.result)
       this.avatar = reader.result as string;
     };
     reader.onerror = (error) => {

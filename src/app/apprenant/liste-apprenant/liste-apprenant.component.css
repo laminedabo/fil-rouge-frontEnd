@@ -15,3 +15,7 @@ mat-icon{
   button:hover div button mat-icon{
     visibility: visible;
 }
+
+.bouton-plus{
+    position: absolute; right: 10px;
+}

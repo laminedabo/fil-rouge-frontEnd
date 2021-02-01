@@ -91,15 +91,6 @@ export class AddGroupeCompetenceComponent implements OnInit {
   //competence from autocomplete
   add(event: MatChipInputEvent): void {
     const input = event.input;
-    const value = event.value;
-    var cmp: Competence = {
-      'libelle':value
-    };
-
-    // Add our cmp
-    if ((value || '').trim() && this._filterExact(cmp.libelle)[0]) {
-      // this.competences.push(cmp); on ne fait rien...
-    }
 
     // Reset the input value
     if (input) {
@@ -130,13 +121,6 @@ export class AddGroupeCompetenceComponent implements OnInit {
     const filterValue = value;
 
     return this.allCompetences.filter((cmp: Competence) => this.toLowerCase(cmp.libelle).includes(this.toLowerCase(filterValue)));
-  }
-
-  //not used
-  private _filterExact(value: string): Competence[] {
-    const filterValue = value;
-
-    return this.allCompetences.filter((cmp: Competence) => cmp.libelle == filterValue);
   }
 
   toLowerCase(ch: string):string{

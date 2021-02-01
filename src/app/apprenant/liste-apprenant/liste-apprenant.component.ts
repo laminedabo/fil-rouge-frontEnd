@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/Services/user.service';
+import { ListeUsersComponent } from 'src/app/user/liste-users/liste-users.component';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-liste-apprenant',
@@ -9,7 +13,7 @@ import { UserService } from 'src/app/Services/user.service';
 export class ListeApprenantComponent implements OnInit {
 
   apprenants: any[];
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, public userDetails: ListeUsersComponent) { }
 
   ngOnInit(): void {
     this.userService.getApprenants().subscribe(
@@ -28,4 +32,87 @@ export class ListeApprenantComponent implements OnInit {
     this.idAppr = appr.id;
   }
 
+  showCard(appr: any){
+    const documentDefinition = this.getInfos(appr);
+    pdfMake.createPdf(documentDefinition).open();
+  }
+
+  getProfilePicObject(appr: any) {
+    if (appr.avatar) {
+      return {
+        image: 'data:image/jpg;base64,'+appr.avatar ,
+        width: 100,
+        alignment : 'right'
+      };
+    }
+    return null;
+  }
+
+  getInfos(appr: any){
+    return {
+      info: {
+        title: 'carte_de_'+appr.prenom,
+        author: 'ldab_dev',
+        subject: 'Apprenant',
+      },
+      pageSize: 'A5',
+      pageOrientation: 'landscape',
+      watermark: { text: 'Sonatel Academy', angle: 60, color: 'red', opacity: 0.08, bold: true, italics: true },
+      footer:  {text: 'Cohorte 3 sonatel academy', alignment: 'center' },
+      content: [
+        {
+          text: 'Carte Apprenant',
+          bold: true,
+          fontSize: 25,
+          alignment: 'center',
+          decoration: 'underline',
+          margin: [0, 0, 0, 20]
+        },
+        {
+          text: 'Developpement Web/Mobile',
+          fontSize: 20,
+          color: 'red',
+          alignment: 'center',
+          margin: [0, 0, 0, 20]
+        },
+        {
+          columns:[
+            [
+              {
+                text: 'Nom : '+appr.nom,
+                fontSize: 15,
+              },
+              {
+                text: 'Prénom : '+appr.prenom,
+                fontSize: 15,
+              },
+              {
+                text: 'Email : '+appr.email,
+                fontSize: 15,
+              },
+              {
+                text: 'Adresse : '+appr.adresse,
+                fontSize: 15,
+              }
+            ],
+            [
+              this.getProfilePicObject(appr)
+            ]
+          ]
+        },
+        {
+          columns:[
+          {
+            text: 'Sonatel Academy',
+            fontSize: 20,
+            color: 'green',
+            alignment: 'left',
+            margin: [0, 20, 0, 0]
+          },
+          { qr: 'sa', fit: '50', alignment: 'right',margin: [0, 20, 0, 0]},
+        ],
+      },
+      ]
+    }
+  }
 }

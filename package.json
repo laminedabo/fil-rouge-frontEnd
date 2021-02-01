@@ -26,6 +26,7 @@
     "bootstrap": "^4.5.3",
     "ngx-file-drop": "^10.1.1",
     "ngx-material-file-input": "^2.1.1",
+    "pdfmake": "^0.1.70",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

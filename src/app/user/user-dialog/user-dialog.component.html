@@ -10,7 +10,8 @@
         <p> Nom d'utilisateur: <strong>{{data.user.username}}</strong> </p>
         <p> Adresse: <strong>{{data.user.adresse}}</strong> </p>
         <p> Profil: <strong>{{data.user.profil.libelle}}</strong> </p>
-        <p> Date de dernière connexion: <strong>{{data.user.lastLogin |  date:'dd/MM/yyyy à hh:mm'}}</strong> </p>
+        <p *ngIf="data.user.lastLogin"> Date de dernière connexion: <strong>{{data.user.lastLogin |  date:'dd/MM/yyyy à hh:mm'}}</strong> </p>
+        <p *ngIf="!data.user.lastLogin"> Date de dernière connexion: <strong>Ne s'est jamais connecté(e)</strong> </p>
     </mat-dialog-content>
 
     <mat-dialog-actions>

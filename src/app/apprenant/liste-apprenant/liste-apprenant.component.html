@@ -8,7 +8,18 @@
           </div>
           <p class="mb-1 h5">{{apr.prenom}} {{apr.nom}}</p>
           <div>
-            <small class="h6">{{apr.email}}</small> <button mat-icon-button style="position: absolute; right: 10px;" matTooltip="Plus"><mat-icon>more_vert</mat-icon></button>
+            <small class="h6">{{apr.email}}</small>
+            <button mat-icon-button (mouseover)=(menu) [matMenuTriggerFor]="menu" class="bouton-plus" matTooltip="Plus"><mat-icon>more_vert</mat-icon></button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="this.userDetails.openDetails(apr)">
+                <mat-icon>subject</mat-icon>
+                <span>Afficher les détails</span>
+              </button>
+              <button mat-menu-item (click)="showCard(apr)">
+                <mat-icon>picture_in_picture</mat-icon>
+                <span>Voir la carte</span>
+              </button>
+            </mat-menu>
           </div>
         </button>
       </div>

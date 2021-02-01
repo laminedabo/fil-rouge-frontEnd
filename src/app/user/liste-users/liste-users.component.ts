@@ -1,7 +1,7 @@
 import { ProfilService } from './../../Services/profil.service';
 import { ProfilDetailsComponent } from './../../profil/profil-details/profil-details.component';
 import { User } from './../../Entity/User';
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../Services/user.service';
 import { PageEvent } from "@angular/material/paginator";
@@ -16,6 +16,9 @@ import { AuthService } from 'src/app/parametres/auth.service';
   styleUrls: ['./liste-users.component.css']
 })
 
+@Injectable({
+  providedIn: 'root'
+})
 export class ListeUsersComponent implements OnInit {
 
   constructor(
@@ -92,7 +95,7 @@ export class ListeUsersComponent implements OnInit {
   openDetails(user:User) {
     this.dialogConfig.disableClose = true;
     this.dialogConfig.height = '65%';
-    this.dialogConfig.width = '50%'
+    this.dialogConfig.width = '50%';
     this.dialogConfig.data = {
       "title":"Details Utilisateur",
       "user":user,

@@ -31,12 +31,20 @@ import { AddGroupetagsComponent } from './groupetags/add-groupetags/add-groupeta
 import { ProfilSortieDetailsComponent } from './profilSortie/profil-sortie-details/profil-sortie-details.component';
 import { AddPromoComponent } from './promo/add-promo/add-promo.component';
 import { DetailsPromoComponent } from './promo/details-promo/details-promo.component';
+import { CurrentPromoResolver } from './Resolvers/current-promo.service';
 
 const routes: Routes = [
   {path: 'login', component: ConnexionComponent},
   { path: '', redirectTo: 'admin', pathMatch: 'full' },
   { path: 'admin', component: AppContainerComponent, canActivate: [AuthGuard], children:[
-    { path: 'accueil', component: AccueilAdminComponent, canActivate: [AuthGuard]},
+    { 
+      path: 'accueil',
+      component: AccueilAdminComponent,
+      canActivate: [AuthGuard],
+      resolve: {
+        currentPromo: CurrentPromoResolver
+      }
+    },
     {
       path:'', redirectTo: 'accueil', pathMatch: 'full'
     },

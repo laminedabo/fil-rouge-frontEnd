@@ -1,5 +1,5 @@
 import { ProfilService } from './../../Services/profil.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserService } from 'src/app/Services/user.service';
 import { FileValidator } from 'ngx-material-file-input';

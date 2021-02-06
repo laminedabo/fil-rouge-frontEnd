@@ -1,3 +1,4 @@
+import { PromoService } from './../../Services/promo.service';
 import { ReferentielService } from './../../Services/referentiel.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -52,6 +53,7 @@ export class AddPromoComponent implements OnInit {
 
   constructor(
     private promo: Promo,
+    private promoservice: PromoService,
     private formBuilder: FormBuilder,
     private refService: ReferentielService
   ) {}
@@ -94,17 +96,25 @@ export class AddPromoComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    this.promo = this.registerForm.value
-    if (this.apprenants.length !==null) {
-      this.promo.apprenants = this.apprenants;
-    }
+    this.promo = this.registerForm.value;
+    this.promo.apprenants = this.apprenants;
     if (this.idRef !== null) {
-      this.promo.referentiel = `/admin/referentiels/${this.idRef}`
+      this.promo.referentiel = `/api/admin/referentiels/${this.idRef}`
     }
-    if (this.avatar_promo !== null) {
-      this.promo.avatar = this.avatar_promo
-    }
-    console.log(this.promo)
+
+    // console.log(this.promo)
+    const formData = new FormData();
+    formData.append('promo',JSON.stringify(this.promo));
+    formData.append('excelFile', this.registerForm.value.exelFile.files[0]);
+    formData.append('avatar', this.avatar_promo);
+    this.promoservice.addPromo(formData).subscribe(
+      (data) => {
+        console.log(data)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   }
 
   // mails from chips

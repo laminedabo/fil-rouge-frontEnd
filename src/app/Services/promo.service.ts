@@ -31,4 +31,8 @@ export class PromoService {
   search(term:any){
     return this.authService.patch('/api/admin/promos/search',term);
   }
+
+  addGroupe(groupe: any, idPromo: number){
+    return this.authService.put(`/api/admin/promos/${idPromo}/groupes`,groupe)
+  }
 }

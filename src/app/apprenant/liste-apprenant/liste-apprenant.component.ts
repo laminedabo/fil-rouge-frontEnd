@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/Services/user.service';
+import { Apprenant } from './../Apprenants';
+import { Component, Input, OnInit } from '@angular/core';
 import { ListeUsersComponent } from 'src/app/user/liste-users/liste-users.component';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -12,19 +12,11 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class ListeApprenantComponent implements OnInit {
 
-  apprenants: any[];
-  constructor(private userService: UserService, public userDetails: ListeUsersComponent) { }
+  @Input('apprenants') apprenants: Apprenant[];
+  constructor(public userDetails: ListeUsersComponent) { }
 
   ngOnInit(): void {
-    this.userService.getApprenants().subscribe(
-      data => {
-        this.apprenants = data;
-        this.apprClicked(this.apprenants[0])
-      },
-      error => {
-        console.log(error)
-      }
-    )
+    this.apprClicked(this.apprenants[0])
   }
 
   idAppr: number

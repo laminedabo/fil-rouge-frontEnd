@@ -27,12 +27,12 @@
       class="example-list"
       cdkDropListSortingDisabled
       (cdkDropListDropped)="drop($event)">
-      <div class="example-box" *ngFor="let apr of apprenants" cdkDrag>{{apr.prenom}} {{apr.nom}}</div>
+      <div class="example-box" *ngFor="let apr of apprCurGrps" cdkDrag>{{apr.prenom}} {{apr.nom}}</div>
     </div>
   </div>
 
   <div class="col col-sm-6 float-left commonX" style="height: 250px; overflow: auto;">
-    <div class="font-weight-bold" style="font-size: 18px;">Liste des Apprenants</div>
+    <div class="font-weight-bold" style="font-size: 18px;">Les Apprenants de la promo</div>
 
     <div
       cdkDropList

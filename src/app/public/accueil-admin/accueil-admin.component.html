@@ -2,7 +2,7 @@
     <app-jumbotron></app-jumbotron>
     <div>
         <div class="col float-left common col-sm-4">
-            <app-liste-apprenant></app-liste-apprenant>
+            <app-liste-apprenant [apprenants]="groupe_principal.apprenants"></app-liste-apprenant>
         </div>
         <div class="col col-sm-8 common">
             <app-details-apprenant></app-details-apprenant>
@@ -10,10 +10,10 @@
     </div>
     <div>
         <div class="col col-sm-4 float-left">
-            <app-liste-groupe></app-liste-groupe>
+            <app-liste-groupe (active_groupe)="groupActif($event)" [groupes]="promo.groupes" [idPromo]="promo.id"></app-liste-groupe>
         </div>
         <div class="col col-sm-8 float-right">
-            <app-details-groupe></app-details-groupe>
+            <app-details-groupe [(CurrentGrp)]="active_groupe" [groupe_principal]="groupe_principal"></app-details-groupe>
         </div>
     </div>
 </div>

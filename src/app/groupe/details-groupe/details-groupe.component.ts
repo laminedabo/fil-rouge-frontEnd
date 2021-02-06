@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Apprenant } from './../../apprenant/Apprenants';
+import { Groupe } from './../Groupe';
+import { Component, Input, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { UserService } from 'src/app/Services/user.service';
 
 @Component({
   selector: 'app-details-groupe',
@@ -9,19 +10,21 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class DetailsGroupeComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
-  apprenants:any 
 
+  @Input('CurrentGrp') CurrentGrp: Groupe
+  @Input('groupe_principal') groupe_principal: Groupe
+  apprenants: Apprenant[];
+  apprCurGrps: Apprenant[];
   ngOnInit(): void {
-    this.userService.getApprenants().subscribe(
-      data => {
-        this.apprenants = data;
-      },
-      error => {
-        console.log(error)
-      }
-    )
+    this.apprenants = this.groupe_principal.apprenants
+    this.apprCurGrps = this.CurrentGrp.apprenants
+    console.log(this.CurrentGrp.apprenants)
+  }
+
+  @Input('currentGrp') currentGrp(grp: Groupe){
+    console.log('ee')
   }
 
   drop(event: CdkDragDrop<string[]>) {

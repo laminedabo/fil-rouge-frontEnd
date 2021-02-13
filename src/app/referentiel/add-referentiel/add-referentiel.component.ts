@@ -60,7 +60,9 @@ export class AddReferentielComponent implements OnInit {
 
     this.filteredcompetences = this.cmpCtrl.valueChanges.pipe(
       startWith(null),
-      map((libelle: string | null) => libelle ? this._filter(libelle) : this.allCompetences.slice()));
+      map((libelle: string | null) => libelle ? this._filter(libelle) : this.allCompetences.filter(
+        (g:any) => !this.competences.includes(g)
+      )));
   }
 
   get formControls(){

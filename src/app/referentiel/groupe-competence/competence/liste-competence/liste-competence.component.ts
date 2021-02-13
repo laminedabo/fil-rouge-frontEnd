@@ -16,7 +16,11 @@ export class ListeCompetenceComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(
       (data: any) => {
-        this.competences = data.competences
+        data.competences.cmps.subscribe(
+          (cmps:any) =>{
+            this.competences = cmps
+          }
+        )
       },
       error => {
         console.log(error)

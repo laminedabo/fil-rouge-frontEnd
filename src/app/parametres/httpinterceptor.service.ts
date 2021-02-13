@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse,   } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { JWTTokenService } from './jwt-helper.service';

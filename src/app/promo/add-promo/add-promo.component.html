@@ -140,9 +140,20 @@
             | byteFormat}}).
           </mat-error>
         </mat-form-field>
+        <mat-form-field class="form-field col-12" appearance="fill">
+          <ngx-mat-file-input formControlName="csvFile" placeholder="fichier exel" [accept]="'.csv'" valuePlaceholder="Importer un fichier csv"></ngx-mat-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+          <mat-error *ngIf="registerForm.get('csvFile').hasError('required')">
+            Importez un fichier csv
+          </mat-error>
+          <mat-error *ngIf="registerForm.get('csvFile').hasError('maxContentSize')">
+            La taille ne doit pas depasser {{registerForm.get('csvFile')?.getError('maxContentSize').maxSize | byteFormat}} ({{registerForm.get('csvFile')?.getError('maxContentSize').actualSize
+            | byteFormat}}).
+          </mat-error>
+        </mat-form-field>
 
         <div>
-          <button mat-button mat-raised-button color="accent" matStepperPrevious>Revoir</button>
+          <button mat-button mat-raised-button color="accent" matStepperPrevious>Précédent</button>
           <button type="button" mat-button mat-raised-button color="primary" class="float-right" matStepperNext>Suivant</button>
         </div>
       </form>
@@ -167,7 +178,7 @@
         </div>
       </div>
       <div>
-        <button mat-button mat-button mat-raised-button color="accent" matStepperPrevious>Revoir</button>
+        <button mat-button mat-button mat-raised-button color="accent" matStepperPrevious>Précédent</button>
         <button mat-button mat-raised-button color="warn" class="float-right" (click)="stepper.reset()">Annuler tout</button>
       </div>
     <button class="float-right mt-5" mat-raised-button mat-button [disabled]="registerForm.invalid || idRef==null" type="submit" (click)="submitted()">Valider la création de la promo</button>

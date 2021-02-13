@@ -50,7 +50,7 @@ export class ListeApprenantComponent implements OnInit {
       pageSize: 'A5',
       pageOrientation: 'landscape',
       watermark: { text: 'Sonatel Academy', angle: 60, color: 'red', opacity: 0.08, bold: true, italics: true },
-      footer:  {text: 'Cohorte 3 sonatel academy', alignment: 'center' },
+      footer:  {text: '_______________________________________________________________________\nCohorte 3 sonatel academy', alignment: 'center' },
       content: [
         {
           text: 'Carte Apprenant',
@@ -101,7 +101,7 @@ export class ListeApprenantComponent implements OnInit {
             alignment: 'left',
             margin: [0, 20, 0, 0]
           },
-          { qr: 'sa', fit: '50', alignment: 'right',margin: [0, 20, 0, 0]},
+          { qr: 'apprenat à odc cohorte 3', fit: '50', alignment: 'right',margin: [0, 20, 0, 0]},
         ],
       },
       ]

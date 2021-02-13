@@ -13,6 +13,9 @@ export class ListePromoComponent implements OnInit {
   title = "Liste des Promos"
 
   promos: any[];
+  id_promo(pr){
+    console.log(pr)
+  }
 
   ngOnInit(): void {
     this.promoService.getPromos(1).subscribe(
@@ -25,4 +28,7 @@ export class ListePromoComponent implements OnInit {
     )
   }
 
+  pro(promo: any){
+    console.log(promo)
+  }
 }

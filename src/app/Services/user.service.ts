@@ -10,7 +10,7 @@ export class UserService {
   constructor(private profilService: ProfilService, private authService: AuthService) { }
 
   getUsers(pageIndex?: number){
-    return this.authService.get('/api/admin/users?statut=actif&page='+pageIndex);
+    return this.authService.get('/api/admin/users?profil.libelle!=APPRENANT&statut=actif&page='+pageIndex);
   }
 
 

@@ -13,7 +13,7 @@
             <app-liste-groupe (active_groupe)="groupActif($event)" [groupes]="promo.groupes" [idPromo]="promo.id"></app-liste-groupe>
         </div>
         <div class="col col-sm-8 float-right">
-            <app-details-groupe [(CurrentGrp)]="active_groupe" [groupe_principal]="groupe_principal"></app-details-groupe>
+            <app-details-groupe [groupe_principal]="groupe_principal"></app-details-groupe>
         </div>
     </div>
 </div>

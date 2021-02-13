@@ -2,7 +2,8 @@
 <div class="container bg-light">
     <div class="rounded border col-12 mb-2 ">
         <div class="h4 align-middle p-2">Libelle:</div>
-        <div class="h5 vline align-middle p-3 text-secondary font-weight-normal">Realiser une maquette avec figma</div>
+        <div class="h5 vline align-middle p-3 text-secondary font-weight-normal" (mouseover)="update('cmp')" (mouseleave)="update('')">{{libelle}}<button style="height: 0px;" *ngIf="field==='cmp'" mat-button (click)="editcmp=true"><mat-icon>mode_edit</mat-icon></button></div>
+        <div *ngIf="editcmp==true" class="h5 vline align-middle pl-3 text-secondary font-weight-normal"><mat-form-field class="col-12" appearance="outline"><input [(ngModel)]="competence.libelle" matInput required><button (click)="editcmp=false" mat-button matTooltip="Enregistrer" matSuffix><mat-icon>send</mat-icon></button> <button (click)="editcmp=false" mat-button matTooltip="Annuler" matSuffix><mat-icon>cancel</mat-icon></button> </mat-form-field></div>
     </div>
 
     <div class="rounded border col-12 mb-2">
@@ -12,18 +13,61 @@
                 <button mat-button mat-raised-button class="m-2 d-inline" *ngFor="let niveau of niveaux" [color]="idNiv===niveau.id?'primary':''" (click)="niveauClicked(niveau)">{{niveau.libelle}}</button>
                 <div class="w-100"><hr></div>
                 <div class="font-weight-normal row">
-                    <div class="col-6"><div class="text-primary">Groupe d'action</div><hr class="w-50"> {{grpAction}} </div>
-                    <div class="vline2 col-6"><div class="text-primary">Critère d'évaluation</div><hr class="w-50"> {{critereEval}} </div>
+                    <div (mouseover)="update('gprAc')" (mouseleave)="update('')" class="col-6"><div class="text-primary">Groupe d'action</div><hr class="w-50">{{grpAction}}<button style="height: 0px;" *ngIf="field==='gprAc'" mat-button (click)="editgrpA=true"><mat-icon>mode_edit</mat-icon></button></div>
+                    <div (mouseover)="update('crtEv')" (mouseleave)="update('')" class="vline2 col-6"><div class="text-primary">Critère d'évaluation</div><hr class="w-50"> {{critereEval}} }<button style="height: 0px;" *ngIf="field==='crtEv'" mat-button (click)="editcrtEv=true"><mat-icon>mode_edit</mat-icon></button></div>
+                    <div *ngIf="editgrpA==true" class="col-12"><mat-form-field class="col-12" appearance="outline"><textarea rows="5" [(ngModel)]="grpAction" matInput required></textarea><button (click)="editgrpA=false" mat-button matTooltip="Enregistrer" matSuffix><mat-icon>send</mat-icon></button> <button (click)="editgrpA=false" mat-button matTooltip="Annuler" matSuffix><mat-icon>cancel</mat-icon></button> </mat-form-field></div>
+                    <div *ngIf="editcrtEv==true" class="col-12"><mat-form-field class="col-12" appearance="outline"><textarea rows="5" [(ngModel)]="critereEval" matInput required></textarea><button (click)="editcrtEv=false" mat-button matTooltip="Enregistrer" matSuffix><mat-icon>send</mat-icon></button> <button (click)="editcrtEv=false" mat-button matTooltip="Annuler" matSuffix><mat-icon>cancel</mat-icon></button> </mat-form-field></div>
                 </div>
             </div>
         </div>
         <div class="col-12 d-inline">
             <div class="h4 align-middle col-12 p-2">Groupe de Compétences</div>
             <div class="vline">
-                <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Realiser le front-end d'une application<button mat-button><mat-icon>more_vert</mat-icon></button></div>
+                <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Realiser le front-end d'une application
+                    <button mat-icon-button (mouseover)=(menu) [matMenuTriggerFor]="menu" class="bouton-plus" matTooltip="Plus"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item [routerLink]="['/admin/groupecompetences/'+1]">
+                            <mat-icon>subject</mat-icon>
+                            <span>Afficher les détails</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>sync_disabled</mat-icon>
+                            <span>Dissocier de cette compétence</span>
+                        </button>
+                    </mat-menu>
+                </div>
                 <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Faire une modélisation<button mat-button><mat-icon>more_vert</mat-icon></button></div>
                 <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Faire le back-end d'une application<button mat-button><mat-icon>more_vert</mat-icon></button></div>
                 <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Realiser une maquette<button mat-button><mat-icon>more_vert</mat-icon></button></div>
+                <div class="m-2 p-3">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Affecter à un autre groupe de compétences</mat-label>
+                        <mat-chip-list #chipList aria-label="competence selection">
+                          <mat-chip
+                            *ngFor="let item of items"
+                            [selectable]="selectable"
+                            [removable]="removable"
+                            (removed)="remove(item)">
+                            {{item.libelle}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                          </mat-chip>
+                          <input
+                            placeholder="Taper un Groupe de compétences..."
+                            #itemInput
+                            [formControl]="itemCtrl"
+                            [matAutocomplete]="auto"
+                            [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="add($event)">
+                        <button (click)="affecter()" [disabled]="items.length===0" mat-icon-button matSuffix type="button" matTooltip="Synchroniser"><mat-icon>sync</mat-icon></button>
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                          <mat-option *ngFor="let item of filteredItems | async" [value]="item">
+                            {{item.libelle}}
+                          </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
     </div>

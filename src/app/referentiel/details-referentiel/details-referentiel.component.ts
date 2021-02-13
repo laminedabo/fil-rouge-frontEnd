@@ -71,6 +71,7 @@ export class DetailsReferentielComponent implements OnInit {
       },
       pageSize: 'A3',
       watermark: { text: 'Sonatel Academy', angle: 60, color: 'blue', opacity: 0.08, bold: true, italics: true },
+      footer:  {text: '__________________________________________________________________________________\nSonatel Academy, Immeuble Scalène Mermoz Ecole Police lot B Dakar', alignment: 'center' },
       content: [
         {
           text: this.referentiel.libelle,

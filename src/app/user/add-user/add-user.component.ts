@@ -28,8 +28,12 @@ export class AddUserComponent implements OnInit {
  
   ngOnInit(): void {
     this.profilService.getProfils().subscribe(
-      data => {
-        this.profils = data
+      (data: any[]) => {
+        this.profils = data.filter(
+          (profil: any) => {
+            return profil.libelle !=='APPRENANT'
+          }
+        )
       }
     )  
     this.registerForm = this.formBuilder.group({

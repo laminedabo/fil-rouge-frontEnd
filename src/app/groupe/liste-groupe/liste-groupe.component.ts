@@ -1,3 +1,4 @@
+import { SharePromoValService } from './../../promo/share-promo-val.service';
 import { PromoService } from './../../Services/promo.service';
 import { Groupe } from './../Groupe';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
@@ -9,7 +10,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class ListeGroupeComponent implements OnInit {
 
-  constructor(private promoservice: PromoService) { }
+  constructor(private promoservice: PromoService, private shareVal: SharePromoValService) { }
 
   @Input('groupes') groupes: Groupe[]
   @Input('idPromo') idPromo: number;
@@ -22,7 +23,8 @@ export class ListeGroupeComponent implements OnInit {
   idGrp: number
   grpClicked(grp:Groupe){
     this.idGrp = grp.id;
-    this.groupActif(grp)
+    this.groupActif(grp);
+    this.shareVal.setValue(grp)
   }
 
   @Output('active_groupe') active_groupe = new EventEmitter();
@@ -35,7 +37,7 @@ export class ListeGroupeComponent implements OnInit {
       (group: Groupe) => {
         const g: Groupe = {
           id:this.groupes.length+2,
-          nom: 'new Groupe',
+          nom: this.newGrp,
           type: 'sec',
           dateCreation: new Date,
           apprenants: [],

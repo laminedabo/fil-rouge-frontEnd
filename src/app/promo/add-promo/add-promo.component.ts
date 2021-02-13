@@ -72,6 +72,10 @@ export class AddPromoComponent implements OnInit {
         undefined,
         [FileValidator.maxContentSize(this.maxSize)]
       ],
+      csvFile: [
+        undefined,
+        [FileValidator.maxContentSize(this.maxSize)]
+      ],
     });
 
     this.refService.getReferentiels().subscribe(

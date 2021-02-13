@@ -2,7 +2,7 @@
 <div class="text-center">
     <button mat-button mat-raised-button [routerLink]="['/admin/promos/add']"><mat-icon>add_box</mat-icon>Nouvelle promo</button>
 </div>
-<mat-card class="example-card" *ngFor="let promo of promos" [routerLink]="['/admin']">
+<mat-card class="example-card" #promo (click)="pro(promo)" *ngFor="let promo of promos" [routerLink]="['/admin']">
     <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{promo.titre}}</mat-card-title>
@@ -17,6 +17,5 @@
     </mat-card-content>
     <mat-card-actions class="float-right">
         <button mat-button mat-raised-button color="accent">Details</button>
-        <button mat-button mat-raised-button color="primary">Autres</button>
     </mat-card-actions>
 </mat-card>      

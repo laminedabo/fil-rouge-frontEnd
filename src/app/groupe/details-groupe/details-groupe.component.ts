@@ -1,7 +1,8 @@
+import { SharePromoValService } from './../../promo/share-promo-val.service';
 import { Apprenant } from './../../apprenant/Apprenants';
 import { Groupe } from './../Groupe';
 import { Component, Input, OnInit } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, copyArrayItem, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-details-groupe',
@@ -10,29 +11,30 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 })
 export class DetailsGroupeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private shareVal: SharePromoValService) { }
 
 
-  @Input('CurrentGrp') CurrentGrp: Groupe
+  CurrentGrp: Groupe
   @Input('groupe_principal') groupe_principal: Groupe
   apprenants: Apprenant[];
   apprCurGrps: Apprenant[];
   ngOnInit(): void {
+    this.shareVal.getValue().subscribe(
+      (grp: Groupe) =>{
+        this.CurrentGrp = grp
+        this.apprCurGrps = this.CurrentGrp.apprenants
+      }
+    )
     this.apprenants = this.groupe_principal.apprenants
-    this.apprCurGrps = this.CurrentGrp.apprenants
-    console.log(this.CurrentGrp.apprenants)
-  }
-
-  @Input('currentGrp') currentGrp(grp: Groupe){
-    console.log('ee')
   }
 
   drop(event: CdkDragDrop<string[]>) {
     console.log(event.previousContainer)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
+    } 
+    else {
+      copyArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);

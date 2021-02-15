@@ -2,8 +2,8 @@
 <div class="container bg-light">
     <div class="rounded border col-12 mb-2 ">
         <div class="h4 align-middle p-2">Libelle:</div>
-        <div class="h5 vline align-middle p-3 text-secondary font-weight-normal" (mouseover)="update('cmp')" (mouseleave)="update('')">{{libelle}}<button style="height: 0px;" *ngIf="field==='cmp'" mat-button (click)="editcmp=true"><mat-icon>mode_edit</mat-icon></button></div>
-        <div *ngIf="editcmp==true" class="h5 vline align-middle pl-3 text-secondary font-weight-normal"><mat-form-field class="col-12" appearance="outline"><input [(ngModel)]="competence.libelle" matInput required><button (click)="editcmp=false" mat-button matTooltip="Enregistrer" matSuffix><mat-icon>send</mat-icon></button> <button (click)="editcmp=false" mat-button matTooltip="Annuler" matSuffix><mat-icon>cancel</mat-icon></button> </mat-form-field></div>
+        <div class="h5 vline align-middle p-3 text-secondary font-weight-normal" (mouseover)="update('cmp')" (mouseleave)="update('')">{{competence.libelle}}<button style="height: 0px;" *ngIf="field==='cmp'" mat-button (click)="editcmp=true"><mat-icon>mode_edit</mat-icon></button></div>
+        <div *ngIf="editcmp==true" class="h5 vline align-middle pl-3 text-secondary font-weight-normal"><mat-form-field class="col-12" appearance="outline"><input [(ngModel)]="competence.libelle" matInput required #lib><button [disabled]="competence.libelle===''" (click)="updateLibelle(competence.libelle)" mat-button matTooltip="Enregistrer" matSuffix><mat-icon>send</mat-icon></button> <button (click)="editcmp=false" mat-button matTooltip="Annuler" matSuffix><mat-icon>cancel</mat-icon></button> </mat-form-field></div>
     </div>
 
     <div class="rounded border col-12 mb-2">
@@ -23,22 +23,19 @@
         <div class="col-12 d-inline">
             <div class="h4 align-middle col-12 p-2">Groupe de Compétences</div>
             <div class="vline">
-                <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Realiser le front-end d'une application
+                <div *ngFor="let grp of grpCmp" class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">{{grp.libelle}}
                     <button mat-icon-button (mouseover)=(menu) [matMenuTriggerFor]="menu" class="bouton-plus" matTooltip="Plus"><mat-icon>more_vert</mat-icon></button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item [routerLink]="['/admin/groupecompetences/'+1]">
+                        <button mat-menu-item [routerLink]="['/admin/groupecompetences/'+grp.id]">
                             <mat-icon>subject</mat-icon>
                             <span>Afficher les détails</span>
                         </button>
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="grpRemove(grp.id)">
                             <mat-icon>sync_disabled</mat-icon>
                             <span>Dissocier de cette compétence</span>
                         </button>
                     </mat-menu>
                 </div>
-                <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Faire une modélisation<button mat-button><mat-icon>more_vert</mat-icon></button></div>
-                <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Faire le back-end d'une application<button mat-button><mat-icon>more_vert</mat-icon></button></div>
-                <div class="m-2 btn btn-light shadow-sm p-3" style="height: 60px;">Realiser une maquette<button mat-button><mat-icon>more_vert</mat-icon></button></div>
                 <div class="m-2 p-3">
                     <mat-form-field class="w-100" appearance="fill">
                         <mat-label>Affecter à un autre groupe de compétences</mat-label>
@@ -59,7 +56,7 @@
                             [matChipInputFor]="chipList"
                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                             (matChipInputTokenEnd)="add($event)">
-                        <button (click)="affecter()" [disabled]="items.length===0" mat-icon-button matSuffix type="button" matTooltip="Synchroniser"><mat-icon>sync</mat-icon></button>
+                        <button (click)="grpAdd()" [disabled]="items.length===0" mat-icon-button matSuffix type="button" matTooltip="Synchroniser"><mat-icon>sync</mat-icon></button>
                         </mat-chip-list>
                         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                           <mat-option *ngFor="let item of filteredItems | async" [value]="item">

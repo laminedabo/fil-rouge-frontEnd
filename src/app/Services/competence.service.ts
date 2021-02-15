@@ -21,6 +21,6 @@ export class CompetenceService {
   }
 
   updateCompetence(competence:any, id:number){
-    return this.authService.post('/api/admin/competences/'+id,competence);
+    return this.authService.patch('/api/admin/competences/'+id,competence);
   }
 }

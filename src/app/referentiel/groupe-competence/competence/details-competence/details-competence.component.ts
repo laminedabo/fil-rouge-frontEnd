@@ -9,6 +9,7 @@ import { ENTER, COMMA, } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SseService } from 'src/app/parametres/sse-service.service';
 
 @Component({
   selector: 'app-details-competence',
@@ -17,11 +18,11 @@ import { map } from 'rxjs/operators';
 })
 export class DetailsCompetenceComponent implements OnInit {
 
-  constructor(private cmpService: CompetenceService, private route: ActivatedRoute, private grpcmpService: GroupeCompetenceService) { }
+  constructor(private cmpService: CompetenceService, private route: ActivatedRoute, private grpcmpService: GroupeCompetenceService, private sseService: SseService) { }
 
   competence: Competence;
   niveaux: Niveau[];
-  gprCmp: GroupeCompetence[];
+  grpCmp: GroupeCompetence[];
   libelle: string
 
   ngOnInit(): void {
@@ -30,15 +31,29 @@ export class DetailsCompetenceComponent implements OnInit {
         this.competence = comp
         this.libelle = comp.libelle
         this.niveaux = comp.niveau;
-        this.gprCmp = comp.groupecompetences
+        this.grpCmp = comp.groupecompetences
         this.niveauClicked(comp.niveau[0])
       }
     );
+
+    this.sseService.getServerSentEvent('http://localhost:3000/.well-known/mercure?topic=competence'+this.route.snapshot.params['id']).subscribe(
+      (result: any) =>{
+        const data: Competence = JSON.parse(result.data);
+        this.cmpService.getCompetence(data.id).subscribe(
+          (cmp:Competence) =>{
+            this.competence = cmp
+            this.niveaux = cmp.niveau;
+            this.grpCmp = cmp.groupecompetences
+          }
+        )
+      },
+      
+    )
     
     this.grpcmpService.getGroupecompetences().subscribe(
       (grp: GroupeCompetence[])=>{
         grp.forEach(
-          (g1: GroupeCompetence) => this.gprCmp.forEach(
+          (g1: GroupeCompetence) => this.grpCmp.forEach(
             (g2: GroupeCompetence) =>{
               if (g1.libelle!=g2.libelle) {
                 this.allItems.push(g1)
@@ -48,7 +63,7 @@ export class DetailsCompetenceComponent implements OnInit {
         )
         console.log(this.allItems)
         console.log(grp)
-        console.log(this.gprCmp)
+        console.log(this.grpCmp)
       }
     );
 
@@ -76,7 +91,7 @@ export class DetailsCompetenceComponent implements OnInit {
       shuffledWord +=  word.splice(word.length * Math.random() << 0, 1);
     }
     return shuffledWord;
-}
+  }
 
   field: string = '';
   editcmp: boolean = false;
@@ -86,6 +101,34 @@ export class DetailsCompetenceComponent implements OnInit {
     this.field = field;
   }
 
+  updateLibelle(libelle: string){
+    this.editcmp=false
+    this.cmpService.updateCompetence({'libelle': libelle}, +this.route.snapshot.params['id']).subscribe(
+      (res: any) =>{
+        // console.log(res)
+      }
+    )
+  }
+
+  grpRemove(id: number){
+    const grp = this.grpCmp.filter(
+      (g:GroupeCompetence) => g.id = id
+    )
+    this.cmpService.updateCompetence({'to_remove': grp}, +this.route.snapshot.params['id']).subscribe(
+      (res: any) =>{
+        // console.log(res)
+      }
+    )
+  }
+
+  grpAdd(){
+    this.cmpService.updateCompetence({'to_add': this.items}, +this.route.snapshot.params['id']).subscribe(
+      (res: any) =>{
+        // console.log(res)
+        this.items = [];
+      }
+    )
+  }
 
   /**
    * Affecter à un autre groupe de compétences
@@ -98,7 +141,7 @@ export class DetailsCompetenceComponent implements OnInit {
   filteredItems: Observable<GroupeCompetence[]>;
 
   @ViewChild('itemInput') itemInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @ViewChild('matAutocomplete') matAutocomplete: MatAutocomplete;
   items: GroupeCompetence[] = [];
   allItems: GroupeCompetence[] = [];
 

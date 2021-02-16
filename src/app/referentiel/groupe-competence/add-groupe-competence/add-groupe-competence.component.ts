@@ -32,7 +32,7 @@ export class AddGroupeCompetenceComponent implements OnInit {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   panelOpenState = false;
-  newCmp = false;
+  newCmp = []
 
   constructor(
       private formBuilder: FormBuilder,
@@ -87,7 +87,7 @@ export class AddGroupeCompetenceComponent implements OnInit {
 
   newCmptence(cmp:any){
     this.competences.push(cmp);
-    this.newCmp = false;
+    // this.newCmp = false;
   }
 
   //competence from autocomplete
@@ -134,11 +134,16 @@ export class AddGroupeCompetenceComponent implements OnInit {
 
   newCompetence(){
     this.panelOpenState = true;
-    this.newCmp = true;
+    this.newCmp.push(this.newCmp.length+1);
   }
 
-  cancel(){
+  disable = 0;
+  cancel(n:any){
     this.panelOpenState = false;
-    this.newCmp = false;
+    // this.newCmp = false;
+    console.log(n)
+    this.newCmp = this.newCmp.filter(
+      (elt:any)=> n!==elt
+    )
   }
 }

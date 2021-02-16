@@ -50,6 +50,9 @@ import { AccueilAdminComponent } from './public/accueil-admin/accueil-admin.comp
 import { AddPromoComponent } from './promo/add-promo/add-promo.component';
 import {CustomMatPaginatorIntl} from './parametres/custom-mat-paginator-intl.service';
 import { CompetenceNiveauComponent } from './referentiel/competence-niveau/competence-niveau.component';
+import { ListeBriefComponent } from './brief/liste-brief/liste-brief.component';
+import { AddBriefComponent } from './brief/add-brief/add-brief.component';
+import { DetailsBriefComponent } from './brief/details-brief/details-brief.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +93,10 @@ import { CompetenceNiveauComponent } from './referentiel/competence-niveau/compe
     JumbotronComponent,
     AccueilAdminComponent,
     AddPromoComponent,
-    CompetenceNiveauComponent
+    CompetenceNiveauComponent,
+    ListeBriefComponent,
+    AddBriefComponent,
+    DetailsBriefComponent
   ],
   imports: [
     BrowserModule,

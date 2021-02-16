@@ -1,0 +1,17 @@
+.example-card {
+    width: 300px;
+    margin: 1%;
+    display: inline-block;
+  }
+  
+  .example-header-image {
+    background-image: url('../../../assets/images/logo-sa.jpg');
+    background-size: cover;
+  }
+
+  .example-card:hover{
+    border:1px solid lawngreen;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+  }
+  

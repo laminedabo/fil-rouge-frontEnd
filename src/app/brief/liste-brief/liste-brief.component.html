@@ -1,0 +1,97 @@
+<h1 class="mat-display-1 text-center p-2">{{title}}</h1>
+<div class="text-center">
+    <button mat-button mat-raised-button [routerLink]="['/admin/briefs/add']"><mat-icon class="mr-2">add_box</mat-icon>Nouvel brief</button>
+</div>
+
+<div class="ml-3">
+    <button mat-button mat-raised-button [matMenuTriggerFor]="animals">	<mat-icon class="mr-2">filter_list</mat-icon>Filter cette liste</button>
+    <mat-menu #animals="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="vertebrates">Par Promo</button>
+    <button mat-menu-item [matMenuTriggerFor]="invertebrates">Par Reférentiel</button>
+    </mat-menu>
+
+    <mat-menu #vertebrates="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="fish">Dev web</button>
+    <button mat-menu-item [matMenuTriggerFor]="amphibians">Ref digital</button>
+    <button mat-menu-item [matMenuTriggerFor]="reptiles">Data science</button>
+    </mat-menu>
+
+    <mat-menu #invertebrates="matMenu">
+    <button mat-menu-item>Developpement web-mobile</button>
+    <button mat-menu-item>Reférent Digital</button>
+    <button mat-menu-item>Data science</button>
+    </mat-menu>
+
+    <mat-menu #fish="matMenu">
+    <button mat-menu-item>Groupe principal</button>
+    <button mat-menu-item>Groupe 1</button>
+    <button mat-menu-item>Groupe 2</button>
+    <button mat-menu-item>Groupe 3</button>
+    </mat-menu>
+
+    <mat-menu #amphibians="matMenu">
+        <button mat-menu-item>Groupe principal</button>
+        <button mat-menu-item>Groupe 1</button>
+        <button mat-menu-item>Groupe 2</button>
+        <button mat-menu-item>Groupe 3</button>
+    </mat-menu>
+
+    <mat-menu #reptiles="matMenu">
+        <button mat-menu-item>Groupe principal</button>
+        <button mat-menu-item>Groupe 1</button>
+        <button mat-menu-item>Groupe 2</button>
+        <button mat-menu-item>Groupe 3</button>
+    </mat-menu>
+</div>
+
+<mat-card class="example-card" *ngFor="let brief of briefs">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{brief.titre}}</mat-card-title>
+        <mat-card-subtitle>{{brief.referentiel.libelle}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image class="brief_avatar" src="{{'data:image/jpg;base64,' + brief.avatar}}" alt="Photo du brief">
+    <mat-card-content>
+        <p>
+        <!-- {{brief.description}}<br> -->
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, pariatur incidunt...
+        </p>
+    </mat-card-content>
+    <mat-card-actions class="float-right">
+        <small class="float-left">{{brief.dateCreation |  date:'dd/MM/yyyy à hh:mm'}}</small>
+        <button mat-icon-button [matMenuTriggerFor]="animals" class="bouton-plus" matTooltip="Plus"><mat-icon>more_vert</mat-icon></button>
+
+        <mat-menu #animals="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="vertebrates">Affecter à</button>
+        <button mat-menu-item [routerLink]="['/admin/briefs/'+brief.id]">Voir les détails</button>
+        </mat-menu>
+
+        <mat-menu #vertebrates="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="c1">Cohorte 1</button>
+        <button mat-menu-item [matMenuTriggerFor]="c2">Cohorte 2</button>
+        <button mat-menu-item [matMenuTriggerFor]="c3">Cohorte 3</button>
+        </mat-menu>
+
+        <mat-menu #c1="matMenu">
+        <button mat-menu-item>Tout le monde</button>
+        <button mat-menu-item>Groupe 1</button>
+        <button mat-menu-item>Groupe 2</button>
+        <button mat-menu-item>Groupe 3</button>
+        </mat-menu>
+
+        <mat-menu #c2="matMenu">
+            <button mat-menu-item>Tout le monde</button>
+            <button mat-menu-item>Groupe 1</button>
+            <button mat-menu-item>Groupe 2</button>
+            <button mat-menu-item>Groupe 3</button>
+            <button mat-menu-item>Groupe 4</button>
+        </mat-menu>
+
+        <mat-menu #c3="matMenu">
+            <button mat-menu-item>Tout le monde</button>
+            <button mat-menu-item>Groupe 1</button>
+            <button mat-menu-item>Groupe 2</button>
+            <button mat-menu-item>Groupe 3</button>
+        </mat-menu>
+    </mat-card-actions>
+</mat-card>      

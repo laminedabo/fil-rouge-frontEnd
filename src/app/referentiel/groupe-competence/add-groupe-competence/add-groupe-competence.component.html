@@ -36,7 +36,7 @@
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           (matChipInputTokenEnd)="add($event)">
-      <button (click)="newCompetence()" [disabled]="newCmp" mat-icon-button matSuffix type="button" matTooltip="Créer une nouvelle compétence"><mat-icon>add_box</mat-icon></button>
+      <button (click)="newCompetence()"  mat-icon-button matSuffix type="button" matTooltip="Créer une nouvelle compétence"><mat-icon>add_box</mat-icon></button>
       </mat-chip-list>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
         <mat-option *ngFor="let cmp of filteredcompetences | async" [value]="cmp">
@@ -45,17 +45,17 @@
       </mat-autocomplete>
     </mat-form-field>
 
-    <div *ngIf="newCmp">
+    <div *ngFor="let num of newCmp" class="mb-3">
       <mat-accordion class="example-headers-align">
-        <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
+        <mat-expansion-panel (opened)="panelOpenState = true"
                              (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Créer une compétence
             </mat-panel-title>
             <mat-panel-description>
-              {{panelOpenState ? 'Fermer' : 'Ouvrir'}}
-              <button (click)="cancel()" mat-icon-button mat-button type="button" matTooltip="Annuler la création de compétence"><mat-icon>clear</mat-icon></button>
+              Nouvelle compétence {{num}}
+              <button (click)="cancel(num)" mat-icon-button mat-button type="button" matTooltip="Annuler la création de compétence"><mat-icon>clear</mat-icon></button>
             </mat-panel-description>
           </mat-expansion-panel-header>
           <app-add-competence [called]=true (competenceEvent)="newCmptence($event)"></app-add-competence>

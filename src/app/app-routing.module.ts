@@ -32,6 +32,9 @@ import { ProfilSortieDetailsComponent } from './profilSortie/profil-sortie-detai
 import { AddPromoComponent } from './promo/add-promo/add-promo.component';
 import { DetailsPromoComponent } from './promo/details-promo/details-promo.component';
 import { CurrentPromoResolver } from './Resolvers/current-promo.service';
+import { AddBriefComponent } from './brief/add-brief/add-brief.component';
+import { DetailsBriefComponent } from './brief/details-brief/details-brief.component';
+import { ListeBriefComponent } from './brief/liste-brief/liste-brief.component';
 
 const routes: Routes = [
   {path: 'login', component: ConnexionComponent},
@@ -97,6 +100,28 @@ const routes: Routes = [
         {
           path: ':id',
           component: DetailsPromoComponent,
+          canActivate: [AuthGuard],
+        }
+      ] 
+    },
+    { 
+      path: 'briefs',
+      canActivate: [AuthGuard],
+      children:[
+        { path: '', redirectTo: 'liste', pathMatch: 'full' },
+        {
+          path: 'liste',
+          component: ListeBriefComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'add',
+          component: AddBriefComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: ':id',
+          component: DetailsBriefComponent,
           canActivate: [AuthGuard],
         }
       ] 

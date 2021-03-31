@@ -1,1 +1,237 @@
-<p>add-brief works!</p>
+<h1 class="mat-display-2 text-cent m-1 mb-3 text-center">Création de Brief</h1>
+<div class="row col-12">
+  <div class="bg-light col-7">
+  
+
+
+    <mat-horizontal-stepper #stepper>
+      <mat-step [stepControl]="registerForm">
+        <form [formGroup]="registerForm" (submit)="submitted()">
+          <ng-template matStepLabel>Attributs brief</ng-template>
+          <div class="w-100 border rounded mb-3 p-2">
+            <mat-form-field class="form-field col-12" appearance="fill">
+              <mat-label>Titre du brief</mat-label>
+              <input matInput formControlName="titre" placeholder="Donnez un titre concis à la brief" required>
+              <mat-error *ngIf="registerForm.get('titre').hasError('required')">
+                Le titre est <strong>requis</strong>
+              </mat-error>
+              <mat-hint>200 caractères max.</mat-hint>
+            </mat-form-field>
+          </div>
+      
+          <div class="w-100 border rounded mb-3 p-2">
+            <mat-form-field class="form-field col-12" appearance="fill">
+              <mat-label>La description</mat-label>
+              <textarea matInput formControlName="description" placeholder="Donnez une description claire du brief" required></textarea>
+              <mat-error *ngIf="registerForm.get('description').hasError('required')">
+                La description est <strong>obligatoire</strong>
+              </mat-error>
+              <mat-hint>1000 caractères max.</mat-hint>
+            </mat-form-field>      
+          </div>
+      
+          <div class="w-100 border rounded mb-3 p-2">
+            <mat-form-field class="form-field col-12" appearance="fill">
+              <mat-label>Le contexte</mat-label>
+              <input matInput formControlName="contexte" placeholder="La région">
+              <mat-hint>200 caractères max.</mat-hint>
+            </mat-form-field>
+          </div>
+      
+          <div class="w-100 border rounded mb-3 p-2">
+            <mat-form-field class="form-field col-12" appearance="fill">
+              <mat-label>Livrables Attendus</mat-label>
+              <input matInput formControlName="livrablesAttendus" placeholder="C'est un code analytique, à demander au responsable de formation">
+              <mat-hint>200 caractères max.</mat-hint>
+            </mat-form-field>
+          </div>
+      
+          <div class="w-100 border rounded mb-3 p-2">
+            <div class="d-inline">
+              <mat-form-field appearance="fill"  class="col-6">
+                <mat-label>Langue</mat-label>
+                <mat-select formControlName="langue" required>
+                  <mat-option [value]="'Français'">Français</mat-option>
+                  <mat-option [value]="'English'">English</mat-option>
+                  <mat-option [value]="'Spanish'">Spanish</mat-option>
+                </mat-select>
+                <mat-error *ngIf="registerForm.get('langue').hasError('required')">Choisir la langue</mat-error>
+              </mat-form-field>
+            </div>
+      
+            <div class="d-inline">
+              <mat-form-field appearance="fill"  class="col-6">
+                <mat-label>Modalités Pédagogiques</mat-label>
+                <input matInput formControlName="modalitesPedagogiques" placeholder="C'est un code analytique, à demander au responsable de formation">
+              <mat-hint>200 caractères max.</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="d-inline">
+              <mat-form-field appearance="fill"  class="col-6">
+                <mat-label>Modalités d'Evaluation</mat-label>
+                <input matInput formControlName="modalitesEvaluation" placeholder="C'est un code analytique, à demander au responsable de formation">
+              <mat-hint>200 caractères max.</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="d-inline">
+              <mat-form-field appearance="fill"  class="col-6">
+                <mat-label>Critères De Performance</mat-label>
+                <input matInput formControlName="criteresDePerformance" placeholder="C'est un code analytique, à demander au responsable de formation">
+              <mat-hint>200 caractères max.</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+      
+        </form>
+        <button mat-button mat-raised-button color="primary" class="float-right" matStepperNext>Suivant</button>
+  
+      </mat-step>
+  
+      <mat-step [stepControl]="registerForm">
+        <form [formGroup]="registerForm" (submit)="submitted()">
+          <ng-template matStepLabel>Reférentiel et tags</ng-template>
+            <div class="p-2" style="font-size:x-large;">Reférentiel<span class="required text-danger">*</span></div>
+            <button type="button" mat-button mat-raised-button class="p-4 h3 m-4" style="font-size:large;" *ngFor="let ref of referentiels" [color]="idRef===ref.id?'accent':''" (click)="refChosen(ref)">{{ref.libelle}}</button>
+  
+            <div class="p-2" style="font-size:x-large;">Tags</div>
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Cliquer sur les boutons ci dessous</mat-label>
+            <mat-chip-list #chipList aria-label="tag selection">
+              <mat-chip
+                *ngFor="let tag of tags"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(tag)">
+                {{tag.libelle}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </mat-form-field>
+          <div>
+            <button mat-button mat-raised-button class="mr-2 mb-2" *ngFor="let gtag of groupetags" (click)="gpTagActive(gtag)" mat-button>{{gtag.libelle}}</button>
+          </div>
+          <mat-accordion *ngIf="expand">
+            <mat-expansion-panel [expanded]="expand">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{gpTagActv.libelle}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <mat-chip-list>
+                <mat-chip
+                  *ngFor="let tag of gpTagActv.tag" (click)="selected(tag)">
+                  {{tag.libelle}}
+                </mat-chip>
+              </mat-chip-list>
+              
+            </mat-expansion-panel>
+          </mat-accordion>
+          
+  
+          <mat-form-field class="form-field col-12 mt-2" appearance="fill">
+            <ngx-mat-file-input formControlName="ressource" placeholder="fichier" [accept]="'.xlsx'" valuePlaceholder="Importer un fichier"></ngx-mat-file-input>
+            <mat-icon matSuffix>folder</mat-icon>
+            <mat-error *ngIf="registerForm.get('ressource').hasError('required')">
+              Importez un fichier
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('ressource').hasError('maxContentSize')">
+              La taille ne doit pas depasser {{registerForm.get('ressource')?.getError('maxContentSize').maxSize | byteFormat}} ({{registerForm.get('ressource')?.getError('maxContentSize').actualSize
+              | byteFormat}}).
+            </mat-error>
+          </mat-form-field>
+  
+          <div>
+            <button mat-button mat-raised-button color="accent" matStepperPrevious>Précédent</button>
+            <button type="button" mat-button mat-raised-button color="primary" class="float-right" matStepperNext>Suivant</button>
+          </div>
+        </form>
+      </mat-step>
+  
+  
+  
+  
+      <mat-step>
+        <ng-template matStepLabel>Choisir une image et Valider</ng-template>
+        <div class="center m-3">
+          <ngx-file-drop dropZoneLabel="Glissez une image ici" (onFileDrop)="dropped($event)" 
+          (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+              <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                Glisser et déposer ou &nbsp;
+                <button mat-button mat-raised-button type="button" (click)="openFileSelector()">Choisir une image</button>
+              </ng-template>
+          </ngx-file-drop>
+          <div *ngIf="imgName" class="text-center" style="margin: 30px;">
+            <strong class="d-block mb-3">{{ imgName }}</strong>
+            <img class="img-fluid rounded" style="height: 400px; width: 350px;" src="{{ avatar }}" alt="avatar du brief">
+          </div>
+        </div>
+        <div>
+          <button mat-button mat-button mat-raised-button color="accent" matStepperPrevious>Précédent</button>
+          <button mat-button mat-raised-button color="warn" class="float-right" (click)="stepper.reset()">Annuler tout</button>
+        </div>
+      <button class="float-right mt-5" mat-raised-button mat-button [disabled]="registerForm.invalid || idRef==null" type="submit" (click)="submitted()">Valider la création du brief</button>
+      <button class="float-right mt-5 mr-2" mat-raised-button mat-button  type="button" >Enregistrer en tant que brouillon</button>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+  <div class="col-5 p-4 bg-light" style="height: 750px; overflow: auto;">
+    <div class="h6 font-weight-lighter">Titre</div>
+    <mat-form-field appearance="outline" class="col-12">
+      <input matInput rows="4" [ngModel]="registerForm.value.titre" readonly>
+    </mat-form-field>
+
+    <div class="h6 font-weight-lighter">Description</div>
+    <mat-form-field appearance="outline" class="col-12">
+      <textarea style="resize: none;" matInput readonly [ngModel]="registerForm.value.description"></textarea>
+    </mat-form-field>
+
+    <div class="h6 font-weight-lighter">Contexte</div>
+    <mat-form-field appearance="outline" class="col-12">
+      <input matInput rows="4" [ngModel]="registerForm.value.contexte" readonly>
+    </mat-form-field>
+
+    <div class="h6 font-weight-lighter">Livrables Attendus</div>
+    <mat-form-field appearance="outline" class="col-12">
+      <input matInput rows="4" [ngModel]="registerForm.value.livrablesAttendus" readonly>
+    </mat-form-field>
+
+    <div class="h6 font-weight-lighter">Langue</div>
+    <mat-form-field appearance="outline" class="col-12">
+      <input matInput rows="4" [ngModel]="registerForm.value.langue" readonly>
+    </mat-form-field>
+
+    <div class="h6 font-weight-lighter">Modalités Pédagogiques</div>
+    <mat-form-field appearance="outline" class="col-12">
+      <input matInput rows="4" [ngModel]="registerForm.value.modalitesPedagogiques" readonly>
+    </mat-form-field>
+
+    <div class="h6 font-weight-lighter">Modalités d'Evaluation</div>
+    <mat-form-field appearance="outline" class="col-12">
+      <input matInput rows="4" [ngModel]="registerForm.value.modalitesEvaluation" readonly>
+    </mat-form-field>
+
+    <div class="h6 font-weight-lighter">Critères de Performance</div>
+    <mat-form-field appearance="outline" class="col-12">
+      <input matInput rows="4" [ngModel]="registerForm.value.criteresDePerformance" readonly>
+    </mat-form-field>
+
+    <div class="h6 font-weight-lighter">Tags</div>
+    <mat-form-field appearance="outline" class="col-12">
+      <mat-chip-list #chipList aria-label="tag selection">
+        <mat-chip
+          *ngFor="let tag of tags">
+          {{tag.libelle}}
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+
+    <button class="float-right mt-5" mat-raised-button mat-button [disabled]="registerForm.invalid || idRef==null" type="submit" (click)="submitted()">Valider la création du brief</button>
+    <button class="float-right mt-5 mr-2" mat-raised-button mat-button  type="button" >Enregistrer en tant que brouillon</button>
+  </div>
+</div>

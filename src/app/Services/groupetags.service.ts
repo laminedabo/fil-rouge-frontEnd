@@ -9,7 +9,7 @@ export class GroupetagsService {
   constructor(private authService: AuthService) { }
 
   getGroupetags(){
-    return this.authService.get('/api/admin/groupetags');
+    return this.authService.get('/api/admin/groupetags/tags');
   }
 
   getGroupetag(id: number){
